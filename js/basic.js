@@ -20,13 +20,14 @@ $( document ).ready(function() {
 
     offsetElementBottom = $(".bottom").offset()
     checkBorderBottom = offsetElementBottom.top
+    console.log(checkBorderBottom);
 
     $(".top").click(function(){
         setPosition(12, 0);
     })
 
     $(".bottom").click(function(){
-        setPosition(12, 100);
+        setPosition(12, 105);
     })
 
 });
@@ -85,7 +86,7 @@ function setIconHeight(percentage, pixelPosition){
 
     //checkif snap und damit grenzen setzen.
 
-    var newHeight = map(percentage, 0, 100, 25, iconHeight);
+    var newHeight = map(percentage, 0, 100, 20, iconHeight);
     
     switch (checkIfSnap(pixelPosition)){ //checkifSnap auch parentID übergeben
         case 1:
@@ -165,7 +166,6 @@ function setPosition(parentId, percentagePosition){
     var pixelPosition = wholeDistance * (percentagePosition/100);
 
 
-
     switch (checkIfSnap(pixelPosition)){ //checkifSnap auch parentID übergeben
         case 1:
             $(".bottom").removeClass("selected")
@@ -176,15 +176,14 @@ function setPosition(parentId, percentagePosition){
         case -1:
             $(".bottom").addClass("selected")
             $(".top").removeClass("selected")
-
-
-            $(".textOverlay").animate({top:checkBorderBottom-75}, {duration: 325, step: function( now, fx ){ updateScale(now+37.5) }});
+            $(".textOverlay").animate({top:checkBorderBottom-75}, {duration: 325, step: function( now, fx ){ updateScale(now+150) }});
+            console.log("thisone");
             break;
         case 0:
             $(".bottom").removeClass("selected")
             $(".top").removeClass("selected")
-            $(".textOverlay").animate({top:pixelPosition-$(".textOverlay").height()}, {duration: 325, step: function( now, fx ){ updateScale(now+150) }});
-            console.log("thisone");
+            $(".textOverlay").animate({top:pixelPosition-$(".textOverlay").height()}, {duration: 325, step: function( now, fx ){ updateScale(now+37.5) }});
+
             break;
     }
 
