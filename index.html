@@ -5,6 +5,7 @@
 
 		<link href='http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<link rel="stylesheet" type="text/css" href="css/nav.css">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="mobile-web-app-capable" content="yes">		
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -13,11 +14,14 @@
 		<meta name="language" content="German">
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8;">
 		<meta name="viewport" content="minimal-ui">
+        <script src="js/Breakout.min.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
         <script type='application/javascript' src='js/fastclick.js'></script>
+        <script src="js/main.js"></script>
 		<script src="js/basic.js"></script>
 		<script src="js/jquery-ui.js"></script>
-		<script src="js/dragging.js"></script>		
+		<script src="js/dragging.js"></script>	
+
 
 		<script>
 			document.createElement('header');
@@ -28,8 +32,143 @@
 			document.createElement('article');
 		</script>			
 	</head>
-	<body>
-        
+	<body class="start">
+        <div class="overlay">
+        </div>
+	  <div id="navigation">
+	  	<ul>
+	  		<li id="1">
+            	<div class="slots">
+                    <ul id="j1" class="jal">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <ul id="l1" class="light">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <ul id="t1" class="temp clear">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+            	<div class="container">
+                    <div class="active"></div>
+                    <div class="inactive"></div>
+                </div>
+            </li>
+	  		<li id="2">
+            	<div class="slots">
+                    <ul id="j2" class="jal">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <ul id="l2" class="light">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <ul id="t2" class="temp clear">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+            	<div class="container">
+                    <div class="active"></div>
+                    <div class="inactive"></div>
+                </div>
+            </li>
+	  		<li id="3" class="greenLeaf large">
+            	<div class="container">
+                    <div class="active"></div>
+                    <div class="inactive"></div>
+                </div>
+            </li>
+	  		<li id="4">
+            	<div class="slots">
+                    <ul id="j4" class="jal">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <ul id="l4" class="light">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <ul id="t4" class="temp clear">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+            	<div class="container">
+                    <div class="active"></div>
+                    <div class="inactive"></div>
+                </div>
+            </li>
+	  		<li id="5">
+            	<div class="slots">
+                    <ul id="j5" class="jal">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <ul id="l5" class="light">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <ul id="t5" class="temp clear">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+            	<div class="container">
+                    <div class="active"></div>
+                    <div class="inactive"></div>
+                </div>
+            </li>
+	  	</ul>
+	  </div>
+
+      <div class="saveButtons">
+      	<div class="saveJal"></div>
+      	<div class="saveLight"></div>
+      	<div class="saveTemp clear"></div>
+      </div>
+	  
+	          
         <div class="mainwrapper" id="mainLight">
             <div class="element top">
                 <span class="content">AN</span>
