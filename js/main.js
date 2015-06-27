@@ -1,390 +1,390 @@
 $(document).ready(function() {
 
-//VARIABLES
-var counter;
-var longPressed=false;
-var activeButton;
-var greenLeaf=false;
-
-//SYSTEM
-var systemActive=false;
-var systemButton=false;
-
-//VARIABLES SLOTS
-var slots=[false,false,false,false ];
-
-//ARRAYS
-var jalVal=[0,0,0,0];
-var lightVal=[0,0,0,0];
-var tempVal=[0,0,0,0];
-
-var currentVal=[1,4,3];
-
-
-
-var IOBoard = BO.IOBoard;
-var IOBoardEvent = BO.IOBoardEvent;
-var Button = BO.io.Button;
-var ButtonEvent = BO.io.ButtonEvent;
-
-// Set to true to print debug messages to console
-BO.enableDebugging = false; 
-
-// If you are not serving this file from the same computer
-// that the Arduino board is connected to, replace
-// window.location.hostname with the IP address or hostname
-// of the computer that the Arduino board is connected to.
-var host = "172.17.16.37";
-
-
-arduino = new IOBoard(host, 8887);
-
-// Listen for the IOBoard READY event which indicates the IOBoard
-// is ready to send and receive data
-arduino.addEventListener(IOBoardEvent.READY, onReady);
-
-function onReady(event) {
-    // Remove the event listener because it is no longer needed
-    arduino.removeEventListener(IOBoardEvent.READY, onReady);
-
-    // Enable the analog pin so we can read its value
-    arduino.enableAnalogPin(0);
-	
-	var button1 = new Button(arduino, arduino.getDigitalPin(2));
-	button1.addEventListener(ButtonEvent.PRESS, onPress);
-	button1.addEventListener(ButtonEvent.RELEASE, onRelease);
-	var button2 = new Button(arduino, arduino.getDigitalPin(3));
-	button2.addEventListener(ButtonEvent.PRESS, startSystem);
-	button2.addEventListener(ButtonEvent.RELEASE, endSystem);
-}
-
-function onPress(evt) {
-	// get a reference to the target which is the button that 
-	// triggered the event
-	var btn = evt.target;
-	var btnNumber=btn._pin.number-1;
-		console.log(btnNumber);
-
-	// display the state on the page
-	menuReset();
-	if(btnNumber!=3){
-		if(slots[btnNumber-1]){
-			$("#"+(btnNumber)).addClass("visible"); //NUR ACTIVE WENN STATUS EIGNESPEICHERT
-		}
-		startCounter(btnNumber);
-	}
-	else{
-		if(!greenLeaf){
-		 	$("#"+(btnNumber)).addClass("visible"); //NUR ACTIVE WENN STATUS EIGNESPEICHERT
-			greenLeaf=true;
-		}
-	}
-}
-
-function longPress(btnNumber){
-	longPressed=true;
-	activeButton=btnNumber;
-	statusReset(btnNumber);
-	$("#"+(btnNumber)+" .slots").addClass("pressed");
-	if(!slots[btnNumber-1]){ //ÜBERPRÜFUNG OB SLOT EINGESPEICHERTEN WERT HAT
-		slots[btnNumber-1]=true;
-		$("#"+(btnNumber)).addClass("visible");
-		$("#"+(btnNumber)).addClass("saved");
-	}
-}
-
-function startCounter(btnNumber){
-	var count = 25;
-
-	counter = setInterval(timer, 10); //10 will  run it every 100th of a second
-	
-	function timer()
-	{
-		if (count <= 0)
-		{
-			longPress(btnNumber);
-			clearInterval(counter);
-			return;
-		 }
-		 count--;
-	}	
-}
-
-function onRelease(evt){
-	var btn=evt.target;
-	var btnNumber=btn._pin.number-1;
-	if(btnNumber!=3){
-		longPressed=false;
-		var isSaved=checkSaved(btnNumber);
-		if(!isSaved){
-			$("#"+(btnNumber)).removeClass("visible");
-			$("#"+(btnNumber)).removeClass("saved");
-			slots[btnNumber-1]=false;
-			console.log("RESET");
-		}
-		$("#"+(btnNumber)+" .slots").removeClass("pressed");
-		clearInterval(counter);
-		console.log(btnNumber,getJal(activeButton),getLight(activeButton),getTemp(activeButton));
-		activeButton=0;
-	}
-}
-
-
-//SAVE VALUES
-function saveJal(btnNumber){
-	switch (btnNumber) {
-		case 1:
-			jalVal[0]=currentVal[0];
-		break;
-		case 2:
-			jalVal[1]=currentVal[0];
-		break;
-		case 4:
-			jalVal[2]=currentVal[0];
-		break;
-		case 5:
-			jalVal[3]=currentVal[0];
-		break;	
-	}
-	updateJal(currentVal[0],btnNumber);
-}
-
-function saveLight(btnNumber){
-	switch (btnNumber) {
-		case 1:
-			lightVal[0]=currentVal[1];
-		break;
-		case 2:
-			lightVal[1]=currentVal[1];
-		break;
-		case 4:
-			lightVal[2]=currentVal[1];
-		break;
-		case 5:
-			lightVal[3]=currentVal[1];
-		break;	
-	}
-	updateLight(currentVal[1],btnNumber);
-}
-
-function saveTemp(btnNumber){
-	switch (btnNumber) {
-		case 1:
-			tempVal[0]=currentVal[2];
-		break;
-		case 2:
-			tempVal[1]=currentVal[2];
-			
-		break;
-		case 4:
-			tempVal[2]=currentVal[2];
-		break;
-		case 5:
-			tempVal[3]=currentVal[2];
-		break;	
-	}
-	updateTemp(currentVal[2],btnNumber);
-}
-
-//UPDATE VALUEBARS
-
-function updateJal(value,btnNumber){
-	$("#j"+btnNumber).addClass("active");
-	$("#j"+ btnNumber +" li").eq(5-currentVal[0]).addClass("active");
-}
-
-function updateLight(value,btnNumber){
-	$("#l"+btnNumber).addClass("active");
-	$("#l"+ btnNumber +" li").eq(5-currentVal[1]).addClass("active");
-}
-
-function updateTemp(value,btnNumber){
-	$("#t"+btnNumber).addClass("active");
-	$("#t"+ btnNumber +" li").eq(5-currentVal[2]).addClass("active");
-}
-
-//GET VALUES
-function getJal(btnNumber){
-	switch (btnNumber) {
-		case 1:
-			return jalVal[0];
-		break;
-		case 2:
-			return jalVal[1];
-		break;
-		case 4:
-			return jalVal[2];
-		break;
-		case 5:
-			return jalVal[3];
-		break;	
-	}
-}
-
-function getLight(btnNumber){
-	switch (btnNumber) {
-		case 1:
-			return lightVal[0];
-		break;
-		case 2:
-			return lightVal[1];
-		break;
-		case 4:
-			return lightVal[2];
-		break;
-		case 5:
-			return lightVal[3];
-		break;	
-	}
-}
-
-function getTemp(btnNumber){
-	switch (btnNumber) {
-		case 1:
-			return tempVal[0];
-		break;
-		case 2:
-			return tempVal[1];
-		break;
-		case 4:
-			return tempVal[2];
-		break;
-		case 5:
-			return tempVal[3];
-		break;	
-	}
-}
-
-//CLICK EVENTS
-$(".saveJal").click(function(){
-	saveJal(activeButton);
-});
-
-$(".saveLight").click(function(){
-	saveLight(activeButton);
-});
-
-$(".saveTemp").click(function(){
-	saveTemp(activeButton);
-});
-
-//RESET
-//TOGGLE ACTIVE STATUS
-function menuReset(btnNumber){
-	$("#navigation ul li").each(function(){
-			if($(this).hasClass("visible")) {
-				$(this).removeClass("visible");
-			}
-			if(btnNumber!=3){
-				greenLeaf=false;	
-			}
-	});
-}
-
-//OVERWRIDE STATUS
-function statusReset(btnNumber){
-	$("#t"+ btnNumber +" li").each(function(){
-			if($(this).hasClass("active")) {
-				$(this).removeClass("active");
-			}
-	});
-	
-	$("#l"+ btnNumber +" li").each(function(){
-			if($(this).hasClass("active")) {
-				$(this).removeClass("active");
-			}
-	});
-	
-	$("#j"+ btnNumber +" li").each(function(){
-			if($(this).hasClass("active")) {
-				$(this).removeClass("active");
-			}
-	});
-	
-	$("#l"+ btnNumber).removeClass("active");
-	$("#j"+ btnNumber).removeClass("active");
-	$("#t"+ btnNumber).removeClass("active");
-	
-	switch (btnNumber) { //RESET ARRAY
-		case 1:
-			tempVal[0]=0;
-			lightVal[0]=0;
-			jalVal[0]=0;
-		break;
-		case 2:
-			tempVal[1]=0;
-			lightVal[1]=0;
-			jalVal[1]=0;
-		break;
-		case 4:
-			tempVal[2]=0;
-			lightVal[2]=0;
-			jalVal[2]=0;
-		break;
-		case 5:
-			tempVal[3]=0;
-			lightVal[3]=0;
-			jalVal[3]=0;
-		break;	
-	}
-}
-
-//CHECK NOTHING SAVED
-function checkSaved(btnNumber){
-	switch (btnNumber) {
-		case 1:
-			if(lightVal[0]==0&&jalVal[0]==0&&tempVal[0]==0){
-				return false;	
-			}
-			else{
-				return true;	
-			}
-		break;
-		case 2:
-			if(lightVal[1]==0&&jalVal[1]==0&&tempVal[1]==0){
-				return false;	
-			}
-			else{
-				return true;	
-			}
-		break;
-		case 4:
-			if(lightVal[2]==0&&jalVal[2]==0&&tempVal[2]==0){
-				return false;	
-			}
-			else{
-				return true;	
-			}
-		break;
-		case 5:
-			if(lightVal[3]==0&&jalVal[3]==0&&tempVal[3]==0){
-				return false;	
-			}
-			else{
-				return true;	
-			}
-		break;
-	}
-	console.log("none");
-}
-
-function startSystem(){
-	if(!systemButton){
-		if(!systemActive){
-			$(".overlay").addClass("inactive");
-			systemActive=true;
-		}
-		else{
-			$(".overlay").removeClass("inactive");
-			systemActive=false;
-		}
-		systemButton=true;
-	}
-}
-
-function endSystem(){
-		systemButton=false;
-}
+    //VARIABLES
+    var counter;
+    var longPressed=false;
+    var activeButton;
+    var greenLeaf=false;
+    
+    //SYSTEM
+    var systemActive=false;
+    var systemButton=false;
+    
+    //VARIABLES SLOTS
+    var slots=[false,false,false,false ];
+    
+    //ARRAYS
+    var jalVal=[0,0,0,0];
+    var lightVal=[0,0,0,0];
+    var tempVal=[0,0,0,0];
+    
+    var currentVal=[1,4,3];
+    
+    
+    
+    var IOBoard = BO.IOBoard;
+    var IOBoardEvent = BO.IOBoardEvent;
+    var Button = BO.io.Button;
+    var ButtonEvent = BO.io.ButtonEvent;
+    
+    // Set to true to print debug messages to console
+    BO.enableDebugging = false; 
+    
+    // If you are not serving this file from the same computer
+    // that the Arduino board is connected to, replace
+    // window.location.hostname with the IP address or hostname
+    // of the computer that the Arduino board is connected to.
+    var host = "172.17.16.37";
+    
+    
+    arduino = new IOBoard(host, 8887);
+    
+    // Listen for the IOBoard READY event which indicates the IOBoard
+    // is ready to send and receive data
+    arduino.addEventListener(IOBoardEvent.READY, onReady);
+    
+    function onReady(event) {
+        // Remove the event listener because it is no longer needed
+        arduino.removeEventListener(IOBoardEvent.READY, onReady);
+    
+        // Enable the analog pin so we can read its value
+        arduino.enableAnalogPin(0);
+    	
+    	var button1 = new Button(arduino, arduino.getDigitalPin(2));
+    	button1.addEventListener(ButtonEvent.PRESS, onPress);
+    	button1.addEventListener(ButtonEvent.RELEASE, onRelease);
+    	var button2 = new Button(arduino, arduino.getDigitalPin(3));
+    	button2.addEventListener(ButtonEvent.PRESS, startSystem);
+    	button2.addEventListener(ButtonEvent.RELEASE, endSystem);
+    }
+    
+    function onPress(evt) {
+    	// get a reference to the target which is the button that 
+    	// triggered the event
+    	var btn = evt.target;
+    	var btnNumber=btn._pin.number-1;
+    		console.log(btnNumber);
+    
+    	// display the state on the page
+    	menuReset();
+    	if(btnNumber!=3){
+    		if(slots[btnNumber-1]){
+    			$("#"+(btnNumber)).addClass("visible"); //NUR ACTIVE WENN STATUS EIGNESPEICHERT
+    		}
+    		startCounter(btnNumber);
+    	}
+    	else{
+    		if(!greenLeaf){
+    		 	$("#"+(btnNumber)).addClass("visible"); //NUR ACTIVE WENN STATUS EIGNESPEICHERT
+    			greenLeaf=true;
+    		}
+    	}
+    }
+    
+    function longPress(btnNumber){
+    	longPressed=true;
+    	activeButton=btnNumber;
+    	statusReset(btnNumber);
+    	$("#"+(btnNumber)+" .slots").addClass("pressed");
+    	if(!slots[btnNumber-1]){ //ÜBERPRÜFUNG OB SLOT EINGESPEICHERTEN WERT HAT
+    		slots[btnNumber-1]=true;
+    		$("#"+(btnNumber)).addClass("visible");
+    		$("#"+(btnNumber)).addClass("saved");
+    	}
+    }
+    
+    function startCounter(btnNumber){
+    	var count = 25;
+    
+    	counter = setInterval(timer, 10); //10 will  run it every 100th of a second
+    	
+    	function timer()
+    	{
+    		if (count <= 0)
+    		{
+    			longPress(btnNumber);
+    			clearInterval(counter);
+    			return;
+    		 }
+    		 count--;
+    	}	
+    }
+    
+    function onRelease(evt){
+    	var btn=evt.target;
+    	var btnNumber=btn._pin.number-1;
+    	if(btnNumber!=3){
+    		longPressed=false;
+    		var isSaved=checkSaved(btnNumber);
+    		if(!isSaved){
+    			$("#"+(btnNumber)).removeClass("visible");
+    			$("#"+(btnNumber)).removeClass("saved");
+    			slots[btnNumber-1]=false;
+    			console.log("RESET");
+    		}
+    		$("#"+(btnNumber)+" .slots").removeClass("pressed");
+    		clearInterval(counter);
+    		console.log(btnNumber,getJal(activeButton),getLight(activeButton),getTemp(activeButton));
+    		activeButton=0;
+    	}
+    }
+    
+    
+    //SAVE VALUES
+    function saveJal(btnNumber){
+    	switch (btnNumber) {
+    		case 1:
+    			jalVal[0]=currentVal[0];
+    		break;
+    		case 2:
+    			jalVal[1]=currentVal[0];
+    		break;
+    		case 4:
+    			jalVal[2]=currentVal[0];
+    		break;
+    		case 5:
+    			jalVal[3]=currentVal[0];
+    		break;	
+    	}
+    	updateJal(currentVal[0],btnNumber);
+    }
+    
+    function saveLight(btnNumber){
+    	switch (btnNumber) {
+    		case 1:
+    			lightVal[0]=currentVal[1];
+    		break;
+    		case 2:
+    			lightVal[1]=currentVal[1];
+    		break;
+    		case 4:
+    			lightVal[2]=currentVal[1];
+    		break;
+    		case 5:
+    			lightVal[3]=currentVal[1];
+    		break;	
+    	}
+    	updateLight(currentVal[1],btnNumber);
+    }
+    
+    function saveTemp(btnNumber){
+    	switch (btnNumber) {
+    		case 1:
+    			tempVal[0]=currentVal[2];
+    		break;
+    		case 2:
+    			tempVal[1]=currentVal[2];
+    			
+    		break;
+    		case 4:
+    			tempVal[2]=currentVal[2];
+    		break;
+    		case 5:
+    			tempVal[3]=currentVal[2];
+    		break;	
+    	}
+    	updateTemp(currentVal[2],btnNumber);
+    }
+    
+    //UPDATE VALUEBARS
+    
+    function updateJal(value,btnNumber){
+    	$("#j"+btnNumber).addClass("active");
+    	$("#j"+ btnNumber +" li").eq(5-currentVal[0]).addClass("active");
+    }
+    
+    function updateLight(value,btnNumber){
+    	$("#l"+btnNumber).addClass("active");
+    	$("#l"+ btnNumber +" li").eq(5-currentVal[1]).addClass("active");
+    }
+    
+    function updateTemp(value,btnNumber){
+    	$("#t"+btnNumber).addClass("active");
+    	$("#t"+ btnNumber +" li").eq(5-currentVal[2]).addClass("active");
+    }
+    
+    //GET VALUES
+    function getJal(btnNumber){
+    	switch (btnNumber) {
+    		case 1:
+    			return jalVal[0];
+    		break;
+    		case 2:
+    			return jalVal[1];
+    		break;
+    		case 4:
+    			return jalVal[2];
+    		break;
+    		case 5:
+    			return jalVal[3];
+    		break;	
+    	}
+    }
+    
+    function getLight(btnNumber){
+    	switch (btnNumber) {
+    		case 1:
+    			return lightVal[0];
+    		break;
+    		case 2:
+    			return lightVal[1];
+    		break;
+    		case 4:
+    			return lightVal[2];
+    		break;
+    		case 5:
+    			return lightVal[3];
+    		break;	
+    	}
+    }
+    
+    function getTemp(btnNumber){
+    	switch (btnNumber) {
+    		case 1:
+    			return tempVal[0];
+    		break;
+    		case 2:
+    			return tempVal[1];
+    		break;
+    		case 4:
+    			return tempVal[2];
+    		break;
+    		case 5:
+    			return tempVal[3];
+    		break;	
+    	}
+    }
+    
+    //CLICK EVENTS
+    $(".saveJal").click(function(){
+    	saveJal(activeButton);
+    });
+    
+    $(".saveLight").click(function(){
+    	saveLight(activeButton);
+    });
+    
+    $(".saveTemp").click(function(){
+    	saveTemp(activeButton);
+    });
+    
+    //RESET
+    //TOGGLE ACTIVE STATUS
+    function menuReset(btnNumber){
+    	$("#navigation ul li").each(function(){
+    			if($(this).hasClass("visible")) {
+    				$(this).removeClass("visible");
+    			}
+    			if(btnNumber!=3){
+    				greenLeaf=false;	
+    			}
+    	});
+    }
+    
+    //OVERWRIDE STATUS
+    function statusReset(btnNumber){
+    	$("#t"+ btnNumber +" li").each(function(){
+    			if($(this).hasClass("active")) {
+    				$(this).removeClass("active");
+    			}
+    	});
+    	
+    	$("#l"+ btnNumber +" li").each(function(){
+    			if($(this).hasClass("active")) {
+    				$(this).removeClass("active");
+    			}
+    	});
+    	
+    	$("#j"+ btnNumber +" li").each(function(){
+    			if($(this).hasClass("active")) {
+    				$(this).removeClass("active");
+    			}
+    	});
+    	
+    	$("#l"+ btnNumber).removeClass("active");
+    	$("#j"+ btnNumber).removeClass("active");
+    	$("#t"+ btnNumber).removeClass("active");
+    	
+    	switch (btnNumber) { //RESET ARRAY
+    		case 1:
+    			tempVal[0]=0;
+    			lightVal[0]=0;
+    			jalVal[0]=0;
+    		break;
+    		case 2:
+    			tempVal[1]=0;
+    			lightVal[1]=0;
+    			jalVal[1]=0;
+    		break;
+    		case 4:
+    			tempVal[2]=0;
+    			lightVal[2]=0;
+    			jalVal[2]=0;
+    		break;
+    		case 5:
+    			tempVal[3]=0;
+    			lightVal[3]=0;
+    			jalVal[3]=0;
+    		break;	
+    	}
+    }
+    
+    //CHECK NOTHING SAVED
+    function checkSaved(btnNumber){
+    	switch (btnNumber) {
+    		case 1:
+    			if(lightVal[0]==0&&jalVal[0]==0&&tempVal[0]==0){
+    				return false;	
+    			}
+    			else{
+    				return true;	
+    			}
+    		break;
+    		case 2:
+    			if(lightVal[1]==0&&jalVal[1]==0&&tempVal[1]==0){
+    				return false;	
+    			}
+    			else{
+    				return true;	
+    			}
+    		break;
+    		case 4:
+    			if(lightVal[2]==0&&jalVal[2]==0&&tempVal[2]==0){
+    				return false;	
+    			}
+    			else{
+    				return true;	
+    			}
+    		break;
+    		case 5:
+    			if(lightVal[3]==0&&jalVal[3]==0&&tempVal[3]==0){
+    				return false;	
+    			}
+    			else{
+    				return true;	
+    			}
+    		break;
+    	}
+    	console.log("none");
+    }
+    
+    function startSystem(){
+    	if(!systemButton){
+    		if(!systemActive){
+    			$(".overlay").addClass("inactive");
+    			systemActive=true;
+    		}
+    		else{
+    			$(".overlay").removeClass("inactive");
+    			systemActive=false;
+    		}
+    		systemButton=true;
+    	}
+    }
+    
+    function endSystem(){
+    		systemButton=false;
+    }
 
 });
 

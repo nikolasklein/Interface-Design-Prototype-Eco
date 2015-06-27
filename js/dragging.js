@@ -117,8 +117,8 @@
 	    	handle: ".handle",
 	    	containment: "parent",
             snap: ".top, .bottom, .greenleaf",
-            cursorAt: { top: 35, left: 35 },
-            snapTolerance: 35,
+            cursorAt: { top: 37.5, left: 37.5 },
+            snapTolerance: 37.5,
             snapMode: "inner",
 	        start: function(event, ui){
     	        
@@ -232,7 +232,7 @@
 	    $( ".main" ).draggable({ 
 	    	axis: "y",
 	    	scroll: false,
-            snapTolerance: 35,
+            snapTolerance: 37.5,
             snapMode: "inner",
 	        start: function(event, ui){
 
@@ -289,19 +289,19 @@
                         $(".bottom").removeClass("selected")
                         $(".top").addClass("selected")
 
-                        $(".textOverlay").css({"top" : offsetElementTop.top + "px"})
+                        $(".textOverlay").css({"top" : 0 + "px"})
                         break;
                     case -1:
                         $(".bottom").addClass("selected")
                         $(".top").removeClass("selected")
 
-                        $(".textOverlay").css({"top" : checkBorderBottom + "px"})
+                        $(".textOverlay").css({"top" : checkBorderBottom-75 + "px"})
                         break;
                     case 0:
                         $(".bottom").removeClass("selected")
                         $(".top").removeClass("selected")
 
-                        $(".textOverlay").css({"top" : mousePosition-($(".textOverlay").height()/2) + "px"})
+                        $(".textOverlay").css({"top" : mousePosition-75-($(".textOverlay").height()/2) + "px"})
 
                         break;
                 }

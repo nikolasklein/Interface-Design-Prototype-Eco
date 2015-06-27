@@ -171,27 +171,22 @@ function setPosition(parentId, percentagePosition){
             $(".bottom").removeClass("selected")
             $(".top").addClass("selected")
 
-            $(".textOverlay").animate({top:offsetElementTop.top}, {duration: 325, step: function( now, fx ){ updateScale(now+35) }});
+            $(".textOverlay").animate({top:offsetElementTop.top-75}, {duration: 325, step: function( now, fx ){ updateScale(now+37.5) }});
             break;
         case -1:
             $(".bottom").addClass("selected")
             $(".top").removeClass("selected")
 
 
-            $(".textOverlay").animate({top:checkBorderBottom}, {duration: 325, step: function( now, fx ){ updateScale(now+35) }});
+            $(".textOverlay").animate({top:checkBorderBottom-75}, {duration: 325, step: function( now, fx ){ updateScale(now+37.5) }});
             break;
         case 0:
             $(".bottom").removeClass("selected")
             $(".top").removeClass("selected")
-            $(".textOverlay").animate({top:pixelPosition-$(".textOverlay").height()/2}, {duration: 325, step: function( now, fx ){ updateScale(now+35) }});
+            $(".textOverlay").animate({top:pixelPosition-$(".textOverlay").height()}, {duration: 325, step: function( now, fx ){ updateScale(now+150) }});
+            console.log("thisone");
             break;
     }
-    
-    
-
-    
-    ;
-
 
 }
 

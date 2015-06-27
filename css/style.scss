@@ -24,8 +24,17 @@ html, body, div, a, span{
 
 $black: #14161a;
 
+.clear::after{clear:both;}
+
 body {
-	background-color: #e4e4e4;
+
+	margin-left:0px!important;
+	position:relative;
+	background-image:url(../img/icon.jpg);
+	background-repeat:no-repeat;
+	background-size:1104px 621px;	
+
+	background-color:#14161a;
 	text-align: center;
 	margin: 0px;
 	font-weight: 100;
@@ -38,10 +47,19 @@ body {
 }
 
 
+.fullMainWrapper{
+	width:1104px;
+	height:621px;
+	display: block;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+
 
 .mainwrapper{
-    width: 340px;
-    height: 500px;
+    width: 33%;
+    height: 545px;
     display: block;
     position: relative;
     background-color: $black;
@@ -55,11 +73,11 @@ body {
 
 .top, .bottom{
     width: 100%;
-    height: 70px;
+    height: 75px;
     z-index: 3;
     cursor: pointer;
     background-color: #1c1c1c;
-    line-height: 70px;
+    line-height: 75px;
     text-align: center;
     transition: border 0.15s, color 0.15s, background-color 0.15s;
 }
@@ -105,15 +123,15 @@ body {
 
 .main{
     width: 100%;
-    height: 360px;
+    height: 395px;
     z-index: 2;
 }
 
 .iconLayer{
     display: block;
     position: absolute;
-    bottom: 80px;
-    left: 107.5px;
+    bottom: 97.5px;
+    left: 119.5px;
     width: 125px;
     height: 200px;
     background-color: white;
@@ -151,8 +169,8 @@ body {
 .handle{
     display: inline-block;
     pointer-events: all;
-    width: 10%;
-    height: 70px;
+    width: 37.5px;
+    height: 75px;
     position: absolute;
     right: 0px;
     top: 0px;
@@ -161,10 +179,10 @@ body {
 
 .handleCircle{
     display: block;
-    width: 100%;
-    height: 34px;
+    width: 37.5px;
+    height: 37.5px;
     position: absolute;
-    top: 18px;
+    top: 18.75px;
     right: 12px;
     border-radius: 999em;
     background-color: rgba(190, 190, 190, 0.77);
@@ -197,8 +215,8 @@ body {
     text-align: center;
     pointer-events: none;
     position: absolute;
-    height: 70px;
-    line-height: 70px;
+    height: 75px;
+    line-height: 75px;
     color: white;
     font-weight: bold;
     top: 100px;
@@ -240,7 +258,7 @@ body {
 
 .greenleaf{
     width: 100%;
-    height: 70px;
+    height: 75px;
     display: block;
     position: absolute;
     top: 200px;
@@ -252,6 +270,7 @@ body {
     box-sizing: border-box;
     width: 30px;
     height: 30px;
+    margin-left: 1px;
     margin-top: 20px;
     border: 1px solid green;
     border-radius: 9999em;
@@ -262,7 +281,7 @@ body {
     float: left;
     margin: 0px;
     display: inline-block;
-    margin-bottom: 8px;
+    margin-bottom: 9px;
     height: 2px;
     background-color: white;
     border-radius: 5px;
@@ -270,7 +289,7 @@ body {
 }
 
 .skalaLi:first-child{
-    margin-top: 4px;
+    margin-top: 3px;
 }
 
 /* //einkommentieren um die skala zu verkleinern - vlt. irgendwo hilfreich

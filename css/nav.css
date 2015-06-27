@@ -1,22 +1,6 @@
-body{
-	width:1104px;
-	height:621px;
-	background-color:#14161a;
-	margin-left:0px!important;
-	position:relative;
-	background-image:url(../img/icon.jpg);
-	background-repeat:no-repeat;
-	background-size:1104px 621px;
-}
-
-body.start{
-	background-image:url(../img/start.jpg);
-}
-
-.clear::after{clear:both;}
-
 /*OVERLAY*/
 .overlay{
+    display: none;
 	width:100%;
 	height:100%;
 	position:fixed;
@@ -224,6 +208,6 @@ body.start{
 }
 
 /*GREEN LEAF*/
-.greenLeaf .active{
+.greenLeafButton .active{
 	background-color:#52db78!important;	
 }
