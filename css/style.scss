@@ -1,0 +1,278 @@
+html,
+body {
+    width:100%;
+    height:100%;
+}
+
+html{
+	display: table;
+}
+
+html, body, div, a, span{
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.hidden{
+    display: none;
+}
+
+$black: #14161a;
+
+body {
+	background-color: #e4e4e4;
+	text-align: center;
+	margin: 0px;
+	font-weight: 100;
+	color: #7e7e7e;
+	font-family: "Open Sans", "Source Sans", "Helvetica Neue", Helvetica, Arial;
+    display:table-cell;
+    vertical-align:top;	
+    text-align: left;
+    font-size: 120%;
+}
+
+
+
+.mainwrapper{
+    width: 340px;
+    height: 500px;
+    display: block;
+    position: relative;
+    background-color: $black;
+}
+
+.element{
+    display: inline-block;
+    box-sizing: border-box;
+    float: left;
+}
+
+.top, .bottom{
+    width: 100%;
+    height: 70px;
+    z-index: 3;
+    cursor: pointer;
+    background-color: #1c1c1c;
+    line-height: 70px;
+    text-align: center;
+    transition: border 0.15s, color 0.15s, background-color 0.15s;
+}
+
+.top{
+    border-top: none !important;
+    border-bottom: 1px solid #1c1c1c;
+}
+
+.bottom{
+    border-top: 1px solid #1c1c1c;
+    border-bottom: none !important;    
+}
+
+.onlyBorder{
+    background-color: $black;
+}
+
+.top.onlyBorder{
+    border-bottom: 1px dashed #9a9797;
+    color: transparent !important;
+}
+.top.onlyBorderButText{
+    border-bottom: 1px dashed #9a9797;
+}
+
+.bottom.onlyBorder{
+    border-top: 1px dashed #9a9797;
+    color: transparent !important;
+}
+
+.bottom.onlyBorderButText{
+    border-top: 1px dashed #9a9797;
+}
+
+.top.selected, .bottom.selected{
+    background-color: white;
+    color: $black;
+    border-style: solid;
+    border-color: white;
+}
+
+
+.main{
+    width: 100%;
+    height: 360px;
+    z-index: 2;
+}
+
+.iconLayer{
+    display: block;
+    position: absolute;
+    bottom: 80px;
+    left: 107.5px;
+    width: 125px;
+    height: 200px;
+    background-color: white;
+    transition: background .15s;
+    overflow: visible;
+    
+    transition: opacity 0.15s;
+}
+
+.animatedHeight{
+    transition:opacity 0.15s, height 0.15s !important;
+}
+
+.hideBg{
+    opacity: 0.1;
+}
+
+.iconOverlay{
+    display: block;
+    position: absolute;
+    bottom: 0px;
+}
+
+.side{
+    width: 20%;
+    height: 100%;
+    display: block;
+    right: 0px;
+    z-index: 4;
+    position: absolute;
+    text-align: center;
+    padding: 10px 0px;
+}
+
+.handle{
+    display: inline-block;
+    pointer-events: all;
+    width: 10%;
+    height: 70px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+
+
+.handleCircle{
+    display: block;
+    width: 100%;
+    height: 34px;
+    position: absolute;
+    top: 18px;
+    right: 12px;
+    border-radius: 999em;
+    background-color: rgba(190, 190, 190, 0.77);
+    box-sizing: border-box;
+    transition: background-color 0.15s, opacity 0.15s, transform 0.15s;
+}
+
+
+.handleCircleSmall{
+    transform: scale(0.5);
+}
+
+.ui-draggable-dragging .handle .handleCircle{
+    background-color: white;
+}
+
+.ui-draggable-dragging .handle .handleCircle.greenCircle, .greenCircle{
+    background-color: green;
+}
+
+
+.onTop{
+    top: 18px !important;
+}
+
+.textOverlay{
+    width: 100%;
+    z-index: 6;
+    background-color: rgba(120, 120, 120, 0.68);
+    text-align: center;
+    pointer-events: none;
+    position: absolute;
+    height: 70px;
+    line-height: 70px;
+    color: white;
+    font-weight: bold;
+    top: 100px;
+    left: 0px;
+    transition: color 0.15s, background-color 0.15s;
+}
+
+.textTransparent{
+    color: rgba(255, 255, 255, 0);
+    background-color: rgba(255, 255, 255, 0);
+}
+
+
+.skala{
+    display: block;
+    width: 17%;
+    height: 100%;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    z-index: 0;
+    text-align: center;
+    transition: opacity 0.15s;
+}
+
+.skala.hidden{
+    opacity: 0;
+}
+
+.skalaUl{
+    list-style: none;
+    display: inline-block;
+    padding: 0px !important;
+    padding-left: 8% !important;
+    margin: 0px;
+    text-align: center;
+    width: 40%;
+}
+
+.greenleaf{
+    width: 100%;
+    height: 70px;
+    display: block;
+    position: absolute;
+    top: 200px;
+    text-align: center;
+}
+
+.greenleafIcon{
+    display: inline-block;
+    box-sizing: border-box;
+    width: 30px;
+    height: 30px;
+    margin-top: 20px;
+    border: 1px solid green;
+    border-radius: 9999em;
+}
+
+.skalaLi{
+    width: 80%;
+    float: left;
+    margin: 0px;
+    display: inline-block;
+    margin-bottom: 8px;
+    height: 2px;
+    background-color: white;
+    border-radius: 5px;
+    opacity: 0.2;
+}
+
+.skalaLi:first-child{
+    margin-top: 4px;
+}
+
+/* //einkommentieren um die skala zu verkleinern - vlt. irgendwo hilfreich
+.skalaLi:nth-child(even){
+    opacity: 0 !important;
+}
+*/
+
+#mainLight .skalaLi.selected{ //abhängig von der id dann machen
+    background-color: yellow;
+}
