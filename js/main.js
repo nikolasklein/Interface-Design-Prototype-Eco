@@ -69,11 +69,19 @@ $(document).ready(function() {
     	if(btnNumber!=3){
     		if(slots[btnNumber-1]){
     			$("#"+(btnNumber)).addClass("visible"); //NUR ACTIVE WENN STATUS EIGNESPEICHERT
-//                setPosition(0, jalVal[btnNumber]);
-				var setToLightValue = lightVal[btnNumber-1]
-				console.log("lightValue" + setToLightValue);
-                setPosition(1, setToLightValue);
-//                setPosition(2, tempVal[btnNumber]);
+
+				//überprüfen ob jal/light/temp überhaupt gespeichert ist, und nur dann setzen
+
+				var setToJalValue = jalVal[btnNumber-1];
+                setPosition(0, setToJalValue);
+                
+				var setToLightValue = lightVal[btnNumber-1];
+                setPosition(1, setToLightValue);                
+
+				var setToTempValue = tempVal[btnNumber-1];           
+                setPosition(2, setToTempValue);
+
+
     		}
     		startCounter(btnNumber);
     	}
