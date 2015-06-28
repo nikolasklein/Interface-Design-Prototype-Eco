@@ -110,6 +110,9 @@
         var timeArray = [];
         
         var snappedId;
+        
+        var dragParentId = "";
+        var dragParentNumber = 0;
 
 	    $( ".textOverlay" ).draggable({ 
 	    	axis: "y",
@@ -122,14 +125,16 @@
             snapMode: "inner",
 	        start: function(event, ui){
     	        
-    	        //hier ein getParentID()
+    	        //hier ein getdragParentId()
     	        //diese ID dann vor alle Elemente setzen, dann läuft das automatisch ab
+                dragParentId = $(this).parent().attr("id");
+                dragParentNumber = getParentNumber(dragParentId);
+
     	        
-    	        
-                $(".textOverlay").removeClass("textTransparent");
-                $(".skala").removeClass("hidden");
-                $(".top, .bottom").addClass("onlyBorder");
-                $(".iconLayer").addClass("hideBg");
+                $("#" + dragParentId + " .textOverlay").removeClass("textTransparent");
+                $("#" + dragParentId + " .skala").removeClass("hidden");
+                $("#" + dragParentId + " .top, " + "#" + dragParentId + " .bottom").addClass("onlyBorder");
+                $("#" + dragParentId + " .iconLayer").addClass("hideBg");
                 
                 dragSnapped = false;
 	        },	    	
@@ -140,25 +145,25 @@
                 
                 
 				if(newPercentage > 2 && newPercentage < 98){
-    				$(".textOverlayText").html(newPercentage + "%");
+    				$("#" + dragParentId + " .textOverlayText").html(newPercentage + "%");
                 }else if(newPercentage < 2){
-    				$(".textOverlayText").html("AUS");
+    				$("#" + dragParentId + " .textOverlayText").html("AUS");
                 }else if(newPercentage > 98){
-    				$(".textOverlayText").html("AN");
+    				$("#" + dragParentId + " .textOverlayText").html("AN");
                 }
                 
                 switch (checkIfSnap(mousePosition)){
                     case 1:
-                        $(".bottom").removeClass("selected")
-                        $(".top").addClass("selected")
+                        $("#" + dragParentId + " .bottom").removeClass("selected")
+                        $("#" + dragParentId + " .top").addClass("selected")
                         break;
                     case -1:
-                        $(".bottom").addClass("selected")
-                        $(".top").removeClass("selected")
+                        $("#" + dragParentId + " .bottom").addClass("selected")
+                        $("#" + dragParentId + " .top").removeClass("selected")
                         break;
                     case 0:
-                        $(".top").removeClass("selected")
-                        $(".bottom").removeClass("selected")
+                        $("#" + dragParentId + " .top").removeClass("selected")
+                        $("#" + dragParentId + " .bottom").removeClass("selected")
                         break;
                 }
                 
@@ -183,11 +188,11 @@
                     return snapped ? element.item : null;
                 });
 
-                //nicht nur mousePosition, sondern auch parentID
+                //nicht nur mousePosition, sondern auch dragParentId
                 if(snappedTo.length < 1){
-                    updateScale(mousePosition);
+                    updateScale(mousePosition, dragParentNumber);
                     if(dragSnapped){
-                        resetSnapMode(snappedId);
+                        resetSnapMode(snappedId, dragParentId);
                         snappedId = "";
                         dragSnapped = false;
                     }
@@ -201,12 +206,12 @@
                         var newOffset = snappedElement.offset();
                         var newOffsetTop = newOffset.top + 35
     
-                        updateScale(newOffsetTop);
+                        updateScale(newOffsetTop, dragParentNumber);
 
 
                         snappedId = snappedElement.attr("id");
                         
-                        setSnapMode(snappedId);
+                        setSnapMode(snappedId, dragParentId);
 
                         dragSnapped = true;
                     }
@@ -216,13 +221,13 @@
                 
 	        },
 	        stop: function(event, ui){
-                $(".skala").addClass("hidden");
-                $(".textOverlay").addClass("textTransparent");
-                $(".top, .bottom").removeClass("onlyBorder");
-                $(".iconLayer").removeClass("hideBg");
+                $("#" + dragParentId + " .skala").addClass("hidden");
+                $("#" + dragParentId + " .textOverlay").addClass("textTransparent");
+                $("#" + dragParentId + " .top, " + "#" + dragParentId + " .bottom").removeClass("onlyBorder");
+                $("#" + dragParentId + " .iconLayer").removeClass("hideBg");
                 
                 
-                //savePosition(parentID) - abhängig von den Werten eine Funktion schreiben, die dann die Verschiebungen steuert (evtl. über setInterval)
+                //savePosition(dragParentId) - abhängig von den Werten eine Funktion schreiben, die dann die Verschiebungen steuert (evtl. über setInterval)
     	        // > wenn die neue Einstellung dann gespeichert werden soll - kopieraktionen und sowas starten lassen
 
 
@@ -236,13 +241,15 @@
             snapMode: "inner",
 	        start: function(event, ui){
 
-                //parentID speichern und in den folgenden Abfragen verwenden
+                //dragParentId speichern und in den folgenden Abfragen verwenden
+                dragParentId = $(this).parent().attr("id");
+                dragParentNumber = getParentNumber(dragParentId);
 
             	a=ui.offset.top;
             	defaultpostop = ui.position.top;
 
-                $(".top, .bottom").addClass("onlyBorderButText");
-                $(".handleCircle").addClass("handleCircleSmall");
+                $("#" + dragParentId + " .top, " + "#" + dragParentId + " .bottom").addClass("onlyBorderButText");
+                $("#" + dragParentId + " .handleCircle").addClass("handleCircleSmall");
                 
                 starttime = new Date();
                 timeArray = [];
@@ -250,7 +257,7 @@
                 
                 lastMousePosition = false;
                 
-                resetSnapMode("all");
+                resetSnapMode("all", dragParentId);
                 
 	        },	    	
 	        drag: function(event, ui) {
@@ -284,24 +291,24 @@
 
                 //read mouseposition to change .textOverlay
                 
-                switch (checkIfSnap(mousePosition)){ //checkifSnap auch parentID übergeben
+                switch (checkIfSnap(mousePosition)){ //checkifSnap auch dragParentId übergeben
                     case 1:
-                        $(".bottom").removeClass("selected")
-                        $(".top").addClass("selected")
+                        $("#" + dragParentId + " .bottom").removeClass("selected")
+                        $("#" + dragParentId + " .top").addClass("selected")
 
-                        $(".textOverlay").css({"top" : 0 + "px"})
+                        $("#" + dragParentId + " .textOverlay").css({"top" : 0 + "px"})
                         break;
                     case -1:
-                        $(".bottom").addClass("selected")
-                        $(".top").removeClass("selected")
+                        $("#" + dragParentId + " .bottom").addClass("selected")
+                        $("#" + dragParentId + " .top").removeClass("selected")
 
-                        $(".textOverlay").css({"top" : checkBorderBottom-75 + "px"})
+                        $("#" + dragParentId + " .textOverlay").css({"top" : checkBorderBottom-75 + "px"})
                         break;
                     case 0:
-                        $(".bottom").removeClass("selected")
-                        $(".top").removeClass("selected")
+                        $("#" + dragParentId + " .bottom").removeClass("selected")
+                        $("#" + dragParentId + " .top").removeClass("selected")
 
-                        $(".textOverlay").css({"top" : mousePosition-75-($(".textOverlay").height()/2) + "px"})
+                        $("#" + dragParentId + " .textOverlay").css({"top" : mousePosition-75-($(".textOverlay").height()/2) + "px"})
 
                         break;
                 }
@@ -310,8 +317,8 @@
 
 
                 
-                //parentID in updateScale einbauen
-                updateScale(mousePosition)
+                //dragParentId in updateScale einbauen
+                updateScale(mousePosition, dragParentNumber)
                 
                 lastMousePosition = mousePosition;
                 lastTime = midTime;
@@ -320,8 +327,8 @@
 	        },
 	        stop: function(event, ui){
 
-                $(".top, .bottom").removeClass("onlyBorderButText");
-                $(".handleCircle").removeClass("handleCircleSmall");
+                $("#" + dragParentId + " .top," + "#" + dragParentId + " .bottom").removeClass("onlyBorderButText");
+                $("#" + dragParentId + " .handleCircle").removeClass("handleCircleSmall");
                 
                 var fullSpeed = 0;
                 var speedCount = 0;
@@ -340,13 +347,13 @@
                 
                 
                 if(fullAvgSpeed > 0.5){
-                    $(".bottom").click();
+                    $("#" + dragParentId + " .bottom").click();
                 }else if(fullAvgSpeed < -0.5){
-                    $(".top").click();
+                    $("#" + dragParentId + " .top").click();
                 }
 
                 
-                //savePosition(parentID) - abhängig von den Werten eine Funktion schreiben, die dann die Verschiebungen steuert (evtl. über setInterval)
+                //savePosition(dragParentId) - abhängig von den Werten eine Funktion schreiben, die dann die Verschiebungen steuert (evtl. über setInterval)
     	        // > wenn die neue Einstellung dann gespeichert werden soll - kopieraktionen und sowas starten lassen
 			}
 	    });

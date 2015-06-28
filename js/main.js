@@ -1,26 +1,25 @@
-$(document).ready(function() {
+//VARIABLES
+var counter;
+var longPressed=false;
+var activeButton;
+var greenLeaf=false;
 
-    //VARIABLES
-    var counter;
-    var longPressed=false;
-    var activeButton;
-    var greenLeaf=false;
-    
-    //SYSTEM
-    var systemActive=false;
-    var systemButton=false;
-    
-    //VARIABLES SLOTS
-    var slots=[false,false,false,false ];
-    
-    //ARRAYS
-    var jalVal=[0,0,0,0];
-    var lightVal=[0,0,0,0];
-    var tempVal=[0,0,0,0];
-    
-    var currentVal=[1,4,3];
-    
-    
+//SYSTEM
+var systemActive=false;
+var systemButton=false;
+
+//VARIABLES SLOTS
+var slots=[false,false,false,false ];
+
+//ARRAYS
+var jalVal=[0,0,0,0];
+var lightVal=[0,0,0,0];
+var tempVal=[0,0,0,0];
+
+var currentVal=[1,4,3];
+
+
+$(document).ready(function() {
     
     var IOBoard = BO.IOBoard;
     var IOBoardEvent = BO.IOBoardEvent;
@@ -62,7 +61,7 @@ $(document).ready(function() {
     	// get a reference to the target which is the button that 
     	// triggered the event
     	var btn = evt.target;
-    	var btnNumber=btn._pin.number-1;
+    	var btnNumber=btn._pin.number-2;
     		console.log(btnNumber);
     
     	// display the state on the page
@@ -70,6 +69,9 @@ $(document).ready(function() {
     	if(btnNumber!=3){
     		if(slots[btnNumber-1]){
     			$("#"+(btnNumber)).addClass("visible"); //NUR ACTIVE WENN STATUS EIGNESPEICHERT
+//                setPosition(0, jalVal[btnNumber]);
+                setPosition(1, lightVal[btnNumber]);
+//                setPosition(2, tempVal[btnNumber]);
     		}
     		startCounter(btnNumber);
     	}
