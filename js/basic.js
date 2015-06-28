@@ -155,15 +155,12 @@ function updateScale(mouseY, parentId){
     switch (checkIfSnap(mouseY)){
         case -1:
             currentVal[parentId] = 105;
-            console.log(percentage);
             break;
         case 1:
             currentVal[parentId] = 0;
-            console.log(percentage);
             break;
         case 0:
             currentVal[parentId] = percentage;
-            console.log(percentage);
             break;
     }
     
