@@ -92,9 +92,9 @@ function setScaleOpacity(border, parentId){
 
 function setIconHeight(percentage, pixelPosition, parentId){
     var iconHeight = 200; //die default iconheight
-    
-    percentage = 100-percentage;
 
+    percentage = 100-percentage;
+    console.log(percentage);
     var targetParentId = getParentId(parentId);
     
     //checkif snap und damit grenzen setzen.
@@ -214,22 +214,23 @@ function setPosition(parentId, percentagePosition){
     var pixelPosition = wholeDistance * (percentagePosition/100);
 
 
+
     switch (checkIfSnap(pixelPosition)){ //checkifSnap auch parentID übergeben
         case 1:
             $("#" + targetParentId + " .bottom").removeClass("selected")
             $("#" + targetParentId + " .top").addClass("selected")
 
-            $("#" + targetParentId + " .textOverlay").animate({top:offsetElementTop.top-75}, {duration: 325, step: function( now, fx ){ updateScale(now+37.5, parentId) }});
+            $("#" + targetParentId + " .textOverlay").animate({top:offsetElementTop.top - 75}, {duration: 325, step: function( now, fx ){ updateScale(now, parentId) }});
             break;
         case -1:
             $("#" + targetParentId + " .bottom").addClass("selected")
             $("#" + targetParentId + " .top").removeClass("selected")
-            $("#" + targetParentId + " .textOverlay").animate({top:checkBorderBottom-75}, {duration: 325, step: function( now, fx ){ updateScale(now+150, parentId) }});
+            $("#" + targetParentId + " .textOverlay").animate({top:checkBorderBottom - 75}, {duration: 325, step: function( now, fx ){ updateScale(now - 37.5, parentId) }});
             break;
         case 0:
             $("#" + targetParentId + " .bottom").removeClass("selected")
             $("#" + targetParentId + " .top").removeClass("selected")
-            $("#" + targetParentId + " .textOverlay").animate({top:pixelPosition-$(".textOverlay").height()}, {duration: 325, step: function( now, fx ){ updateScale(now+37.5, parentId) }});
+            $("#" + targetParentId + " .textOverlay").animate({top:pixelPosition - 37.5}, {duration: 325, step: function( now, fx ){ updateScale(now - 37.5, parentId) }});
 
             break;
     }
