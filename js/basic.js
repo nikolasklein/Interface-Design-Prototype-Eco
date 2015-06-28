@@ -21,17 +21,21 @@ $( document ).ready(function() {
     checkBorderBottom = offsetElementBottom.top
 
     $(".top").click(function(){
-        var parentString = $(this).parent().attr("id");
-        var setPositionOn = getParentNumber(parentString)
-
-        setPosition(setPositionOn, 0);
+		if(!longPressed){
+	        var parentString = $(this).parent().attr("id");
+	        var setPositionOn = getParentNumber(parentString)
+	
+	        setPosition(setPositionOn, 0);
+		}
     })
 
     $(".bottom").click(function(){
-        var parentString = $(this).parent().attr("id");
-        var setPositionOn = getParentNumber(parentString);
-
-        setPosition(setPositionOn, 105);
+		if(!longPressed){
+	        var parentString = $(this).parent().attr("id");
+	        var setPositionOn = getParentNumber(parentString);
+	
+	        setPosition(setPositionOn, 105);
+		}
     })
 
 });
@@ -151,12 +155,15 @@ function updateScale(mouseY, parentId){
     switch (checkIfSnap(mouseY)){
         case -1:
             currentVal[parentId] = 105;
+            console.log(percentage);
             break;
         case 1:
             currentVal[parentId] = 0;
+            console.log(percentage);
             break;
         case 0:
             currentVal[parentId] = percentage;
+            console.log(percentage);
             break;
     }
     

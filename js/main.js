@@ -33,7 +33,7 @@ $(document).ready(function() {
     // that the Arduino board is connected to, replace
     // window.location.hostname with the IP address or hostname
     // of the computer that the Arduino board is connected to.
-    var host = "172.17.16.37";
+    var host = "172.17.16.222";
     
     
     arduino = new IOBoard(host, 8887);
@@ -61,7 +61,7 @@ $(document).ready(function() {
     	// get a reference to the target which is the button that 
     	// triggered the event
     	var btn = evt.target;
-    	var btnNumber=btn._pin.number-2;
+    	var btnNumber=btn._pin.number-1;
     		console.log(btnNumber);
     
     	// display the state on the page
@@ -70,7 +70,9 @@ $(document).ready(function() {
     		if(slots[btnNumber-1]){
     			$("#"+(btnNumber)).addClass("visible"); //NUR ACTIVE WENN STATUS EIGNESPEICHERT
 //                setPosition(0, jalVal[btnNumber]);
-                setPosition(1, lightVal[btnNumber]);
+				var setToLightValue = lightVal[btnNumber-1]
+				console.log("lightValue" + setToLightValue);
+                setPosition(1, setToLightValue);
 //                setPosition(2, tempVal[btnNumber]);
     		}
     		startCounter(btnNumber);
@@ -258,15 +260,15 @@ $(document).ready(function() {
     }
     
     //CLICK EVENTS
-    $(".saveJal").click(function(){
+    $(".saveJal").click(function(event){
     	saveJal(activeButton);
     });
     
-    $(".saveLight").click(function(){
+    $(".saveLight").click(function(event){
     	saveLight(activeButton);
     });
     
-    $(".saveTemp").click(function(){
+    $(".saveTemp").click(function(event){
     	saveTemp(activeButton);
     });
     
