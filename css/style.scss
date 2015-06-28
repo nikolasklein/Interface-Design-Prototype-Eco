@@ -63,6 +63,7 @@ body {
     display: block;
     position: relative;
     background-color: $black;
+    float: left;
 }
 
 .element{
@@ -298,6 +299,14 @@ body {
 }
 */
 
+#mainJal .skalaLi.selected{ //abhängig von der id dann machen
+    background-color: #c07bf5;
+}
+
 #mainLight .skalaLi.selected{ //abhängig von der id dann machen
-    background-color: yellow;
+    background-color: #e6db41;
+}
+
+#mainTemp .skalaLi.selected{ //abhängig von der id dann machen
+    background-color: #52db78;
 }

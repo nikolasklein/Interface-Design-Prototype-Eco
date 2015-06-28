@@ -189,24 +189,6 @@
 	background-color:#4ab9ec!important;	
 }
 
-
-/*SAVE BUTTONS*/
-.saveButtons{
-	width:1104px;
-	height:75px;
-	position:absolute;
-	bottom:0px;
-}
-
-.saveJal, .saveTemp{
-	width:33.333%;
-	height:100%;
-	text-align:center;
-	padding-top:25px;
-	color:#fff;	
-	float:left;
-}
-
 /*GREEN LEAF*/
 .greenLeafButton .active{
 	background-color:#52db78!important;	
