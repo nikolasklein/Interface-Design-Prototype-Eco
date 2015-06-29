@@ -166,10 +166,7 @@
                         $("#" + dragParentId + " .bottom").removeClass("selected")
                         break;
                 }
-                
-                
                 //Snap Check Test
-                
 
                 var snapped = $(this).data('ui-draggable').snapElements;
                 var snapMode = $(this).data('ui-draggable').options.snapMode;
@@ -197,7 +194,6 @@
                         dragSnapped = false;
                     }
                 }else{
-                    
                     if(!dragSnapped){
                         // fix the snappedTo Bug by calling the function with the values
                         // write a snappedTo - function with ID
@@ -215,10 +211,8 @@
 
                         dragSnapped = true;
                     }
-                    
                 }
 
-                
 	        },
 	        stop: function(event, ui){
                 $("#" + dragParentId + " .skala").addClass("hidden");
