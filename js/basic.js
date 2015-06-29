@@ -144,7 +144,6 @@ function updateScale(mouseY, parentId){
     // berechnen auf welchem prozentpunkt die maus steht
     // alle darunter ausfüllen
     
-    console.log(mouseY);
     
     var targetParentId = getParentId(parentId);
     
@@ -217,16 +216,12 @@ function setPosition(parentId, percentagePosition){
 
     //Umrechnen des Prozentwertes in ein Pixelwert
     var topBorder = offsetElementTop.top;
-    console.log("top" + topBorder);
     
     var bottomBorder = offsetElementBottom.top + $(".bottom").outerHeight();
-    console.log(bottomBorder);
     
     var wholeDistance = bottomBorder - topBorder;
-    console.log("whole" + wholeDistance);
     
     var pixelPosition = topBorder + wholeDistance * (percentagePosition/100);
-    console.log(pixelPosition);
 
 
     switch (checkIfSnap(pixelPosition)){ //checkifSnap auch parentID übergeben
