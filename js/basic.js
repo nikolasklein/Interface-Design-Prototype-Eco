@@ -106,17 +106,34 @@ function setIconHeight(percentage, pixelPosition, parentId){
     
     //checkif snap und damit grenzen setzen.
 
-    var newHeight = map(percentage, 0, 100, 20, iconHeight);
+    var mappingBottom = 0;
+    var maxTop = 0;
+    var maxBottom = iconHeight;
+    
+    if(parentId == 1){
+        mappingBottom = 20;
+    }
+
+    var newHeight = map(percentage, 0, 100, mappingBottom, iconHeight);
+    
+    if (parentId == 0) {
+/*
+        newHeight = map(percentage, 100, 0, mappingBottom, iconHeight);
+        maxBottom = maxTop;
+        maxTop = iconHeight;
+*/
+    }
+
     
     switch (checkIfSnap(pixelPosition)){ //checkifSnap auch parentID übergeben
         case 1:
             $("#" + targetParentId + " .iconLayer").addClass("animatedHeight")
-            $("#" + targetParentId + " .iconLayer").css({"height" : iconHeight + "px"})
+            $("#" + targetParentId + " .iconLayer").css({"height" : maxBottom + "px"})
             setTimeout(function(){$("#" + targetParentId + " .iconLayer").removeClass("animatedHeight")}, 150);
             break;
         case -1:
             $("#" + targetParentId + " .iconLayer").addClass("animatedHeight")
-            $("#" + targetParentId + " .iconLayer").css({"height" : 0 + "px"})
+            $("#" + targetParentId + " .iconLayer").css({"height" : maxTop + "px"})
             setTimeout(function(){$("#" + targetParentId + " .iconLayer").removeClass("animatedHeight")}, 150);
             break;
         case 0:

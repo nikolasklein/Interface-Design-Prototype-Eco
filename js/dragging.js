@@ -147,9 +147,9 @@
 				if(newPercentage > 2 && newPercentage < 98){
     				$("#" + dragParentId + " .textOverlayText").html(newPercentage + "%");
                 }else if(newPercentage < 2){
-    				$("#" + dragParentId + " .textOverlayText").html("AUS");
+    				$("#" + dragParentId + " .textOverlayText").html($("#" + dragParentId + " .bottom .content").attr("id"));
                 }else if(newPercentage > 98){
-    				$("#" + dragParentId + " .textOverlayText").html("AN");
+    				$("#" + dragParentId + " .textOverlayText").html($("#" + dragParentId + " .top .content").attr("id"));
                 }
                 
                 switch (checkIfSnap(mousePosition)){
