@@ -7,6 +7,14 @@ var checkBorderBottom;
 
 
 $( document ).ready(function() {
+    $("#inputFieldSetPosition").keyup(function (e) {
+        if (e.keyCode == 13) {
+            var setTo = parseInt($("#inputFieldSetPosition").val());
+            setPosition(1, setTo);
+        }
+    });
+    
+    
     FastClick.attach(document.body);
      
     screenHeight = $(window).height();
@@ -92,24 +100,40 @@ function setScaleOpacity(border, parentId){
 
 function setIconHeight(percentage, pixelPosition, parentId){
     var iconHeight = 200; //die default iconheight
-    
-    percentage = 100-percentage;
 
+    percentage = 100-percentage;
     var targetParentId = getParentId(parentId);
     
     //checkif snap und damit grenzen setzen.
 
-    var newHeight = map(percentage, 0, 100, 20, iconHeight);
+    var mappingBottom = 0;
+    var maxTop = 0;
+    var maxBottom = iconHeight;
+    
+    if(parentId == 1){
+        mappingBottom = 20;
+    }
+
+    var newHeight = map(percentage, 0, 100, mappingBottom, iconHeight);
+    
+    if (parentId == 0) {
+/*
+        newHeight = map(percentage, 100, 0, mappingBottom, iconHeight);
+        maxBottom = maxTop;
+        maxTop = iconHeight;
+*/
+    }
+
     
     switch (checkIfSnap(pixelPosition)){ //checkifSnap auch parentID übergeben
         case 1:
             $("#" + targetParentId + " .iconLayer").addClass("animatedHeight")
-            $("#" + targetParentId + " .iconLayer").css({"height" : iconHeight + "px"})
+            $("#" + targetParentId + " .iconLayer").css({"height" : maxBottom + "px"})
             setTimeout(function(){$("#" + targetParentId + " .iconLayer").removeClass("animatedHeight")}, 150);
             break;
         case -1:
             $("#" + targetParentId + " .iconLayer").addClass("animatedHeight")
-            $("#" + targetParentId + " .iconLayer").css({"height" : 0 + "px"})
+            $("#" + targetParentId + " .iconLayer").css({"height" : maxTop + "px"})
             setTimeout(function(){$("#" + targetParentId + " .iconLayer").removeClass("animatedHeight")}, 150);
             break;
         case 0:
@@ -136,6 +160,7 @@ function checkIfSnap(mouseY){
 function updateScale(mouseY, parentId){
     // berechnen auf welchem prozentpunkt die maus steht
     // alle darunter ausfüllen
+    
     
     var targetParentId = getParentId(parentId);
     
@@ -208,28 +233,29 @@ function setPosition(parentId, percentagePosition){
 
     //Umrechnen des Prozentwertes in ein Pixelwert
     var topBorder = offsetElementTop.top;
+    
     var bottomBorder = offsetElementBottom.top + $(".bottom").outerHeight();
+    
     var wholeDistance = bottomBorder - topBorder;
     
-    var pixelPosition = wholeDistance * (percentagePosition/100);
+    var pixelPosition = topBorder + wholeDistance * (percentagePosition/100);
 
 
     switch (checkIfSnap(pixelPosition)){ //checkifSnap auch parentID übergeben
         case 1:
             $("#" + targetParentId + " .bottom").removeClass("selected")
             $("#" + targetParentId + " .top").addClass("selected")
-
-            $("#" + targetParentId + " .textOverlay").animate({top:offsetElementTop.top-75}, {duration: 325, step: function( now, fx ){ updateScale(now+37.5, parentId) }});
+            $("#" + targetParentId + " .textOverlay").animate({top:0}, {duration: 325, step: function( now, fx ){ updateScale(now + 76 + 37.5, parentId) }});
             break;
         case -1:
             $("#" + targetParentId + " .bottom").addClass("selected")
             $("#" + targetParentId + " .top").removeClass("selected")
-            $("#" + targetParentId + " .textOverlay").animate({top:checkBorderBottom-75}, {duration: 325, step: function( now, fx ){ updateScale(now+150, parentId) }});
+            $("#" + targetParentId + " .textOverlay").animate({top:bottomBorder - $(".bottom").outerHeight() - topBorder}, {duration: 325, step: function( now, fx ){ updateScale(now + 76 + 37.5, parentId) }});
             break;
         case 0:
             $("#" + targetParentId + " .bottom").removeClass("selected")
             $("#" + targetParentId + " .top").removeClass("selected")
-            $("#" + targetParentId + " .textOverlay").animate({top:pixelPosition-$(".textOverlay").height()}, {duration: 325, step: function( now, fx ){ updateScale(now+37.5, parentId) }});
+            $("#" + targetParentId + " .textOverlay").animate({top:pixelPosition-76-37.5}, {duration: 325, step: function( now, fx ){ updateScale(now+76+37.5, parentId) }});
 
             break;
     }

@@ -16,7 +16,7 @@ var jalVal=[0,0,0,0];
 var lightVal=[0,0,0,0];
 var tempVal=[0,0,0,0];
 
-var currentVal=[1,4,3];
+var currentVal=[0,0,0];
 
 
 $(document).ready(function() {
@@ -69,19 +69,6 @@ $(document).ready(function() {
     	if(btnNumber!=3){
     		if(slots[btnNumber-1]){
     			$("#"+(btnNumber)).addClass("visible"); //NUR ACTIVE WENN STATUS EIGNESPEICHERT
-
-				//überprüfen ob jal/light/temp überhaupt gespeichert ist, und nur dann setzen
-
-				var setToJalValue = jalVal[btnNumber-1];
-                setPosition(0, setToJalValue);
-                
-				var setToLightValue = lightVal[btnNumber-1];
-                setPosition(1, setToLightValue);                
-
-				var setToTempValue = tempVal[btnNumber-1];           
-                setPosition(2, setToTempValue);
-
-
     		}
     		startCounter(btnNumber);
     	}
@@ -126,6 +113,32 @@ $(document).ready(function() {
     	var btn=evt.target;
     	var btnNumber=btn._pin.number-1;
     	if(btnNumber!=3){
+    		console.log("RELEASE");
+    		if(!longPressed&&slots[btnNumber-1]){ //Wenn nicht in speichermodus, dann werte setzen
+    			console.log("CHECK"+btnNumber);
+    			
+    			console.log(jalVal)
+    			console.log(lightVal)
+    			console.log(tempVal)
+    			
+    			if($("#j"+ btnNumber).hasClass("active")) {
+					var setToJalValue = jalVal[btnNumber-1];
+	                setPosition(0, setToJalValue);
+	                console.log(btnNumber+"j saved"+setToJalValue);
+                };
+                
+                if($("#l"+ btnNumber).hasClass("active")) {
+					var setToLightValue = lightVal[btnNumber-1];
+	                setPosition(1, setToLightValue);
+	                console.log(btnNumber+"l saved"+setToLightValue);
+                };             
+
+				if($("#t"+ btnNumber).hasClass("active")) {
+					var setToTempValue = tempVal[btnNumber-1];
+	                setPosition(2, setToTempValue);
+	                console.log(btnNumber+"t saved"+setToTempValue);
+                };
+    		}
     		longPressed=false;
     		var isSaved=checkSaved(btnNumber);
     		if(!isSaved){
@@ -136,7 +149,6 @@ $(document).ready(function() {
     		}
     		$("#"+(btnNumber)+" .slots").removeClass("pressed");
     		clearInterval(counter);
-    		console.log(btnNumber,getJal(activeButton),getLight(activeButton),getTemp(activeButton));
     		activeButton=0;
     	}
     }
@@ -202,17 +214,18 @@ $(document).ready(function() {
     
     function updateJal(value,btnNumber){
     	$("#j"+btnNumber).addClass("active");
-    	$("#j"+ btnNumber +" li").eq(5-currentVal[0]).addClass("active");
+    	console.log("wert"+Math.floor(currentVal[0]/2));
+    	$("#j"+ btnNumber +" li").eq(Math.floor(currentVal[0]/20)).addClass("active");
     }
     
     function updateLight(value,btnNumber){
     	$("#l"+btnNumber).addClass("active");
-    	$("#l"+ btnNumber +" li").eq(5-currentVal[1]).addClass("active");
+    	$("#l"+ btnNumber +" li").eq(Math.floor(currentVal[1]/20)).addClass("active");
     }
     
     function updateTemp(value,btnNumber){
     	$("#t"+btnNumber).addClass("active");
-    	$("#t"+ btnNumber +" li").eq(5-currentVal[2]).addClass("active");
+    	$("#t"+ btnNumber +" li").eq(Math.floor(currentVal[2]/20)).addClass("active");
     }
     
     //GET VALUES

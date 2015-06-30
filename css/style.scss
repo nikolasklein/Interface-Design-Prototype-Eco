@@ -1,3 +1,4 @@
+
 html,
 body {
     width:100%;
@@ -142,6 +143,13 @@ body {
     transition: opacity 0.15s;
 }
 
+#mainJal .iconLayer{
+/*
+    top: 97.5px;
+    bottom: auto;
+*/
+}
+
 .animatedHeight{
     transition:opacity 0.15s, height 0.15s !important;
 }
@@ -155,6 +163,14 @@ body {
     position: absolute;
     bottom: 0px;
 }
+
+#mainJal .iconOverlay{
+/*
+    top: 0px;
+    bottom: auto;
+*/
+}
+
 
 .side{
     width: 20%;

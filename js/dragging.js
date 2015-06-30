@@ -147,9 +147,9 @@
 				if(newPercentage > 2 && newPercentage < 98){
     				$("#" + dragParentId + " .textOverlayText").html(newPercentage + "%");
                 }else if(newPercentage < 2){
-    				$("#" + dragParentId + " .textOverlayText").html("AUS");
+    				$("#" + dragParentId + " .textOverlayText").html($("#" + dragParentId + " .bottom .content").attr("id"));
                 }else if(newPercentage > 98){
-    				$("#" + dragParentId + " .textOverlayText").html("AN");
+    				$("#" + dragParentId + " .textOverlayText").html($("#" + dragParentId + " .top .content").attr("id"));
                 }
                 
                 switch (checkIfSnap(mousePosition)){
@@ -166,10 +166,7 @@
                         $("#" + dragParentId + " .bottom").removeClass("selected")
                         break;
                 }
-                
-                
                 //Snap Check Test
-                
 
                 var snapped = $(this).data('ui-draggable').snapElements;
                 var snapMode = $(this).data('ui-draggable').options.snapMode;
@@ -197,7 +194,6 @@
                         dragSnapped = false;
                     }
                 }else{
-                    
                     if(!dragSnapped){
                         // fix the snappedTo Bug by calling the function with the values
                         // write a snappedTo - function with ID
@@ -215,10 +211,8 @@
 
                         dragSnapped = true;
                     }
-                    
                 }
 
-                
 	        },
 	        stop: function(event, ui){
                 $("#" + dragParentId + " .skala").addClass("hidden");
