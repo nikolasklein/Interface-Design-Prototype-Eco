@@ -123,19 +123,19 @@ $(document).ready(function() {
     			
     			if($("#j"+ btnNumber).hasClass("active")) {
 					var setToJalValue = jalVal[btnNumber-1];
-	                setPosition(0, setToJalValue);
+	                setPosition(0, setToJalValue, true);
 	                console.log(btnNumber+"j saved"+setToJalValue);
                 };
                 
                 if($("#l"+ btnNumber).hasClass("active")) {
 					var setToLightValue = lightVal[btnNumber-1];
-	                setPosition(1, setToLightValue);
+	                setPosition(1, setToLightValue, true);
 	                console.log(btnNumber+"l saved"+setToLightValue);
                 };             
 
 				if($("#t"+ btnNumber).hasClass("active")) {
 					var setToTempValue = tempVal[btnNumber-1];
-	                setPosition(2, setToTempValue);
+	                setPosition(2, setToTempValue, true);
 	                console.log(btnNumber+"t saved"+setToTempValue);
                 };
     		}
