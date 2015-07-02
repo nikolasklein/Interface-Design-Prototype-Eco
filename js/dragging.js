@@ -114,56 +114,84 @@
         var dragParentId = "";
         var dragParentNumber = 0;
 
+        var savePrevPosition;
+        var notAnyMore = false;
+
+        function setSnapElements(dragParentId){
+            $( ".textOverlay" ).draggable( "option", "snap", false);
+            $( ".textOverlay" ).draggable( "option", "snap", ".top, .bottom, #" + dragParentId + " .greenleaf");
+        }
+        
+        
 	    $( ".textOverlay" ).draggable({ 
 	    	axis: "y",
 	    	scroll: false,
 	    	handle: ".handle",
 	    	containment: "parent",
-            snap: ".top, .bottom, .greenleaf",
             cursorAt: { top: 37.5, left: 37.5 },
             snapTolerance: 37.5,
+            snap: ".top, .bottom",
             snapMode: "inner",
 	        start: function(event, ui){
-    	        
+    	        resetSnapMode("allGreen", 0);
     	        //hier ein getdragParentId()
     	        //diese ID dann vor alle Elemente setzen, dann läuft das automatisch ab
                 dragParentId = $(this).parent().attr("id");
                 dragParentNumber = getParentNumber(dragParentId);
 
-    	        
+                savePrevPosition = currentVal[dragParentNumber];
+
                 $("#" + dragParentId + " .textOverlay").removeClass("textTransparent");
                 $("#" + dragParentId + " .skala").removeClass("hidden");
                 $("#" + dragParentId + " .top, " + "#" + dragParentId + " .bottom").addClass("onlyBorder");
                 $("#" + dragParentId + " .iconLayer").addClass("hideBg");
+                $("#" + dragParentId + " .ghost").addClass("hidden");
+                
+
+                setSnapElements(dragParentId);
+
                 
                 dragSnapped = false;
 	        },	    	
 	        drag: function(event, ui) {
-				var topUI = ui.position.top-$(window).scrollTop();
-                var newPercentage = 100-parseInt((topUI/430)*100);
+
+                var greenLeafOffset = $("#" + dragParentId + " .greenleaf").offset();
+                var greenLeafMouse = greenLeafOffset.top+$("#" + dragParentId + " .greenleaf").outerHeight()/2;
+                
 				var mousePosition = event.pageY;
-                
-                
-				if(newPercentage > 2 && newPercentage < 98){
-    				$("#" + dragParentId + " .textOverlayText").html(newPercentage + "%");
-                }else if(newPercentage < 2){
-    				$("#" + dragParentId + " .textOverlayText").html($("#" + dragParentId + " .bottom .content").attr("id"));
-                }else if(newPercentage > 98){
-    				$("#" + dragParentId + " .textOverlayText").html($("#" + dragParentId + " .top .content").attr("id"));
-                }
+                var newPercentage = 100-parseInt(((mousePosition-76)/545)*100);
+                var greenLeafPercentage = 100-parseInt(((greenLeafMouse-76)/545)*100);
                 
                 switch (checkIfSnap(mousePosition)){
                     case 1:
                         $("#" + dragParentId + " .bottom").removeClass("selected")
                         $("#" + dragParentId + " .top").addClass("selected")
+                        if(!dragSnapped){$("#" + dragParentId + " .textOverlayText").html($("#" + dragParentId + " .top .content").attr("id"));}
                         break;
                     case -1:
                         $("#" + dragParentId + " .bottom").addClass("selected")
                         $("#" + dragParentId + " .top").removeClass("selected")
+                            if(!dragSnapped){$("#" + dragParentId + " .textOverlayText").html($("#" + dragParentId + " .bottom .content").attr("id"));}
                         break;
                     case 0:
                         $("#" + dragParentId + " .top").removeClass("selected")
                         $("#" + dragParentId + " .bottom").removeClass("selected")
+                        if(dragParentNumber != 2){
+                            if(!dragSnapped){
+                                $("#" + dragParentId + " .textOverlayText").html(newPercentage + "%");
+                            }else{
+                                $("#" + dragParentId + " .textOverlayText").html(greenLeafPercentage + "%");
+                            }
+                        }else{
+                            
+                            if(!dragSnapped){
+                                var newDegree = parseInt(map(newPercentage, 0, 100, 18, 24));
+                                $("#" + dragParentId + " .textOverlayText").html(newDegree + "°C");
+                            }else{
+                                var newDegree = parseInt(map(greenLeafPercentage, 0, 100, 18, 24));
+                                $("#" + dragParentId + " .textOverlayText").html(newDegree + "°C");
+                            }
+                        }
                         break;
                 }
                 //Snap Check Test
@@ -187,7 +215,7 @@
 
                 //nicht nur mousePosition, sondern auch dragParentId
                 if(snappedTo.length < 1){
-                    updateScale(mousePosition, dragParentNumber);
+                    updateScale(mousePosition, dragParentNumber, savePrevPosition, true);
                     if(dragSnapped){
                         resetSnapMode(snappedId, dragParentId);
                         snappedId = "";
@@ -221,8 +249,14 @@
                 $("#" + dragParentId + " .iconLayer").removeClass("hideBg");
                 
                 
+                if(dragParentNumber != 1){
+                    savePosition(currentVal[dragParentNumber], dragParentNumber, savePrevPosition);
+                }
                 //savePosition(dragParentId) - abhängig von den Werten eine Funktion schreiben, die dann die Verschiebungen steuert (evtl. über setInterval)
     	        // > wenn die neue Einstellung dann gespeichert werden soll - kopieraktionen und sowas starten lassen
+    	        
+
+
 
 
 			}
@@ -238,12 +272,19 @@
                 //dragParentId speichern und in den folgenden Abfragen verwenden
                 dragParentId = $(this).parent().attr("id");
                 dragParentNumber = getParentNumber(dragParentId);
+                
+                savePrevPosition = currentVal[dragParentNumber];
 
             	a=ui.offset.top;
             	defaultpostop = ui.position.top;
 
                 $("#" + dragParentId + " .top, " + "#" + dragParentId + " .bottom").addClass("onlyBorderButText");
                 $("#" + dragParentId + " .handleCircle").addClass("handleCircleSmall");
+                $("#" + dragParentId + " .skala").removeClass("hidden");
+                $("#" + dragParentId + " .greenleaf").addClass("hidden");
+                $("#" + dragParentId + " .ghost").addClass("hidden");
+                
+    	        resetSnapMode("allGreen", 0);
                 
                 starttime = new Date();
                 timeArray = [];
@@ -251,8 +292,12 @@
                 
                 lastMousePosition = false;
                 
+                savePrevPosition = currentVal[dragParentNumber];
+                
                 resetSnapMode("all", dragParentId);
                 
+                setSnapElements(dragParentId);
+
 	        },	    	
 	        drag: function(event, ui) {
 
@@ -262,9 +307,6 @@
 				if(!lastMousePosition){
     				lastMousePosition = mousePosition;
 				}
-
-
-				var topUI = ui.position.top-$(window).scrollTop();
 				
 				
 				//evtl. hier geschwindigkeit ausrechnen um flicken zu erkennen #nicetohave
@@ -312,7 +354,7 @@
 
                 
                 //dragParentId in updateScale einbauen
-                updateScale(mousePosition, dragParentNumber)
+                updateScale(mousePosition, dragParentNumber, savePrevPosition, true);
                 
                 lastMousePosition = mousePosition;
                 lastTime = midTime;
@@ -323,6 +365,7 @@
 
                 $("#" + dragParentId + " .top," + "#" + dragParentId + " .bottom").removeClass("onlyBorderButText");
                 $("#" + dragParentId + " .handleCircle").removeClass("handleCircleSmall");
+                $("#" + dragParentId + " .skala").addClass("hidden");
                 
                 var fullSpeed = 0;
                 var speedCount = 0;
@@ -335,6 +378,12 @@
                         speedCount++;
                     }
 
+                }
+                
+                if(dragParentNumber != 1 && cmdPressed){
+                    savePosition(currentVal[dragParentNumber], dragParentNumber, savePrevPosition);
+                }else{
+                    setTimeout(function(){$("#" + dragParentId + " .greenleaf").removeClass("hidden");}, 200);
                 }
                 
                 var fullAvgSpeed = fullSpeed/speedCount;

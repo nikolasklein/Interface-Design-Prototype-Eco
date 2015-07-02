@@ -28,6 +28,8 @@
 	height:76px;
 	background-color:#FFF!important;
 	border-bottom:1px solid #474749;
+    z-index: 10000;
+    position: relative;
 }
 
 #navigation ul{

@@ -33,212 +33,216 @@
 		</script>			
 	</head>
 	<body>
-        <div class="overlay">
+        <div class="overlay"></div>
+        <div class="fullMainWrapper">
+    	  <div id="navigation">
+    	  	<ul>
+    	  		<li id="1">
+                	<div class="slots">
+                        <ul id="j1" class="jal">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                        <ul id="l1" class="light">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                        <ul id="t1" class="temp clear">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                	<div class="container">
+                        <div class="active"></div>
+                        <div class="inactive"></div>
+                    </div>
+                </li>
+    	  		<li id="2">
+                	<div class="slots">
+                        <ul id="j2" class="jal">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                        <ul id="l2" class="light">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                        <ul id="t2" class="temp clear">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                	<div class="container">
+                        <div class="active"></div>
+                        <div class="inactive"></div>
+                    </div>
+                </li>
+    	  		<li id="3" class="greenLeafButton large">
+                	<div class="container">
+                        <div class="active"></div>
+                        <div class="inactive"></div>
+                    </div>
+                </li>
+    	  		<li id="4">
+                	<div class="slots">
+                        <ul id="j4" class="jal">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                        <ul id="l4" class="light">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                        <ul id="t4" class="temp clear">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                	<div class="container">
+                        <div class="active"></div>
+                        <div class="inactive"></div>
+                    </div>
+                </li>
+    	  		<li id="5">
+                	<div class="slots">
+                        <ul id="j5" class="jal">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                        <ul id="l5" class="light">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                        <ul id="t5" class="temp clear">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                	<div class="container">
+                        <div class="active"></div>
+                        <div class="inactive"></div>
+                    </div>
+                </li>
+    	  	</ul>
+    	  </div>
+    	  
+            <div class="mainwrapper" id="mainJal">
+                <div class="element top">
+                    <span class="content" id="OBEN">OBEN</span>
+                </div>
+    
+                <div class="element main"><div class="iconLayer"><img src="jal.png" class="iconOverlay" width="125" height="200"></div></div>
+    
+                <div class="element bottom saveJal">
+                    <span class="content" id="UNTEN">UNTEN</span>
+                </div>
+    
+                <div class="element textOverlay textTransparent">
+                    <span class="textOverlayText">50</span>
+                    <div class="handle">
+                        <div class="handleCircle"></div>
+                    </div>
+                </div>
+                
+                <div class="skala hidden">
+                    <div class="greenleaf" id="greenleaf"><div class="greenleafIcon">75%</div></div>
+                    <div class="ghost hidden" id="tempGhost"><div class="ghostIcon"></div></div>
+                    <ul class="skalaUl"></ul>
+                </div>
+    
+            </div>
+            
+            
+            <div class="mainwrapper" id="mainLight">
+                <div class="element top">
+                    <span class="content" id="AN">AN</span>
+                </div>
+    
+                <div class="element main"><div class="iconLayer"><img src="light.png" class="iconOverlay" width="125" height="200"></div></div>
+    
+                <div class="element bottom saveLight">
+                    <span class="content" id="AUS">AUS</span>
+                </div>
+    
+                <div class="element textOverlay textTransparent">
+                    <span class="textOverlayText">50</span>
+                    <div class="handle">
+                        <div class="handleCircle"></div>
+                    </div>
+                </div>
+    
+                <div class="skala hidden">
+                    <div class="greenleaf" id="greenleaf"><div class="greenleafIcon">24%</div></div>
+                    <div class="ghost hidden" id="tempGhost"><div class="ghostIcon"></div></div>
+                    <ul class="skalaUl"></ul>
+                </div>
+    
+            </div>
+            
+            
+            <div class="mainwrapper" id="mainTemp">
+                <div class="element top">
+                    <span class="content" id="WARM">WARM</span>
+                </div>
+    
+                <div class="element main"><div class="iconLayer"><img src="temp.png" class="iconOverlay" width="125" height="200"></div></div>
+    
+                <div class="element bottom saveTemp">
+                    <span class="content" id="KALT">KALT</span>
+                </div>
+    
+                <div class="element textOverlay textTransparent">
+                    <span class="textOverlayText">50</span>
+                    <div class="handle">
+                        <div class="handleCircle"></div>
+                    </div>
+                </div>
+    
+                <div class="skala hidden">
+                    <div class="greenleaf" id="greenleaf"><div class="greenleafIcon">20°C</div></div>
+                    <div class="ghost hidden" id="tempGhost"><div class="ghostIcon"></div></div>
+                    <ul class="skalaUl"></ul>
+                </div>
+    
+            </div>
+            <div class="detailOverlay detailLight"></div>
+            <div class="detailOverlay detailSettings"></div>
         </div>
-    <div class="fullMainWrapper">
-	  <div id="navigation">
-	  	<ul>
-	  		<li id="1">
-            	<div class="slots">
-                    <ul id="j1" class="jal">
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                    <ul id="l1" class="light">
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                    <ul id="t1" class="temp clear">
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                </div>
-            	<div class="container">
-                    <div class="active"></div>
-                    <div class="inactive"></div>
-                </div>
-            </li>
-	  		<li id="2">
-            	<div class="slots">
-                    <ul id="j2" class="jal">
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                    <ul id="l2" class="light">
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                    <ul id="t2" class="temp clear">
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                </div>
-            	<div class="container">
-                    <div class="active"></div>
-                    <div class="inactive"></div>
-                </div>
-            </li>
-	  		<li id="3" class="greenLeafButton large">
-            	<div class="container">
-                    <div class="active"></div>
-                    <div class="inactive"></div>
-                </div>
-            </li>
-	  		<li id="4">
-            	<div class="slots">
-                    <ul id="j4" class="jal">
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                    <ul id="l4" class="light">
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                    <ul id="t4" class="temp clear">
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                </div>
-            	<div class="container">
-                    <div class="active"></div>
-                    <div class="inactive"></div>
-                </div>
-            </li>
-	  		<li id="5">
-            	<div class="slots">
-                    <ul id="j5" class="jal">
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                    <ul id="l5" class="light">
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                    <ul id="t5" class="temp clear">
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                </div>
-            	<div class="container">
-                    <div class="active"></div>
-                    <div class="inactive"></div>
-                </div>
-            </li>
-	  	</ul>
-	  </div>
-	  
-        <div class="mainwrapper" id="mainJal">
-            <div class="element top">
-                <span class="content" id="OBEN">OBEN</span>
-            </div>
-
-            <div class="element main"><div class="iconLayer"><img src="jal.png" class="iconOverlay" width="125" height="200"></div></div>
-
-            <div class="element bottom saveJal">
-                <span class="content" id="UNTEN">UNTEN</span>
-            </div>
-
-            <div class="element textOverlay textTransparent">
-                <span class="textOverlayText">50</span>
-                <div class="handle">
-                    <div class="handleCircle"></div>
-                </div>
-            </div>
-
-            <div class="skala hidden">
-                <div class="greenleaf" id="greenleaf"><div class="greenleafIcon"></div></div>
-                <ul class="skalaUl"></ul>
-            </div>
-
-        </div>
-        
-        
-        <div class="mainwrapper" id="mainLight">
-            <div class="element top">
-                <span class="content" id="AN">AN</span>
-            </div>
-
-            <div class="element main"><div class="iconLayer"><img src="light.png" class="iconOverlay" width="125" height="200"></div></div>
-
-            <div class="element bottom saveLight">
-                <span class="content" id="AUS">AUS</span>
-            </div>
-
-            <div class="element textOverlay textTransparent">
-                <span class="textOverlayText">50</span>
-                <div class="handle">
-                    <div class="handleCircle"></div>
-                </div>
-            </div>
-
-            <div class="skala hidden">
-                <div class="greenleaf" id="greenleaf"><div class="greenleafIcon"></div></div>
-                <ul class="skalaUl"></ul>
-            </div>
-
-        </div>
-        
-        
-        <div class="mainwrapper" id="mainTemp">
-            <div class="element top">
-                <span class="content" id="WARM">WARM</span>
-            </div>
-
-            <div class="element main"><div class="iconLayer"><img src="temp.png" class="iconOverlay" width="125" height="200"></div></div>
-
-            <div class="element bottom saveTemp">
-                <span class="content" id="KALT">KALT</span>
-            </div>
-
-            <div class="element textOverlay textTransparent">
-                <span class="textOverlayText">50</span>
-                <div class="handle">
-                    <div class="handleCircle"></div>
-                </div>
-            </div>
-
-            <div class="skala hidden">
-                <div class="greenleaf" id="greenleaf"><div class="greenleafIcon"></div></div>
-                <ul class="skalaUl"></ul>
-            </div>
-
-        </div>
-    </div>
 	</body>
 </html>
