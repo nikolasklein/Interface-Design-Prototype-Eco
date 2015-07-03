@@ -148,19 +148,41 @@ $(document).ready(function() {
 
     			
     			if($("#j"+ btnNumber).hasClass("active")) {
-					var setToJalValue = jalVal[btnNumber-1];
+
+                    var setToJalValue;
+                    
+					if(btnNumber < 3){
+    					setToJalValue = jalVal[btnNumber-1];
+					}else{
+    					setToJalValue = jalVal[btnNumber-2];
+					}
+
 	                setPosition(0, setToJalValue, true);
 	                console.log(btnNumber+"j saved"+setToJalValue);
                 };
                 
                 if($("#l"+ btnNumber).hasClass("active")) {
-					var setToLightValue = lightVal[btnNumber-1];
+
+                    var setToLightValue;
+                    
+					if(btnNumber < 3){
+    					setToLightValue = lightVal[btnNumber-1];
+					}else{
+    					setToLightValue = lightVal[btnNumber-2];
+					}
+
 	                setPosition(1, setToLightValue, true);
 	                console.log(btnNumber+"l saved"+setToLightValue);
                 };             
 
 				if($("#t"+ btnNumber).hasClass("active")) {
-					var setToTempValue = tempVal[btnNumber-1];
+                    var setToTempValue;
+                    
+					if(btnNumber < 3){
+    					setToTempValue = tempVal[btnNumber-1];
+					}else{
+    					setToTempValue = tempVal[btnNumber-2];
+					}
 	                setPosition(2, setToTempValue, true);
 	                console.log(btnNumber+"t saved"+setToTempValue);
                 };
