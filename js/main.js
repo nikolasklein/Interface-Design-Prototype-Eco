@@ -33,7 +33,7 @@ $(document).ready(function() {
     // that the Arduino board is connected to, replace
     // window.location.hostname with the IP address or hostname
     // of the computer that the Arduino board is connected to.
-    var host = "172.17.16.222";
+    var host = "172.17.19.243";
     
     
     arduino = new IOBoard(host, 8887);
@@ -52,9 +52,24 @@ $(document).ready(function() {
     	var button1 = new Button(arduino, arduino.getDigitalPin(2));
     	button1.addEventListener(ButtonEvent.PRESS, onPress);
     	button1.addEventListener(ButtonEvent.RELEASE, onRelease);
-    	var button2 = new Button(arduino, arduino.getDigitalPin(3));
-    	button2.addEventListener(ButtonEvent.PRESS, startSystem);
-    	button2.addEventListener(ButtonEvent.RELEASE, endSystem);
+    	var button2= new Button(arduino, arduino.getDigitalPin(3));
+    	button2.addEventListener(ButtonEvent.PRESS, onPress);
+    	button2.addEventListener(ButtonEvent.RELEASE, onRelease);
+    	var button3= new Button(arduino, arduino.getDigitalPin(4));
+    	button3.addEventListener(ButtonEvent.PRESS, onPress);
+    	button3.addEventListener(ButtonEvent.RELEASE, onRelease);
+    	var button4= new Button(arduino, arduino.getDigitalPin(5));
+    	button4.addEventListener(ButtonEvent.PRESS, onPress);
+    	button4.addEventListener(ButtonEvent.RELEASE, onRelease);
+    	var button5= new Button(arduino, arduino.getDigitalPin(6));
+    	button5.addEventListener(ButtonEvent.PRESS, onPress);
+    	button5.addEventListener(ButtonEvent.RELEASE, onRelease);
+    	var button6= new Button(arduino, arduino.getDigitalPin(7));
+    	button6.addEventListener(ButtonEvent.PRESS, onPress);
+    	button6.addEventListener(ButtonEvent.RELEASE, onRelease);
+    	var schalter = new Button(arduino, arduino.getDigitalPin(8));
+        schalter.addEventListener(ButtonEvent.PRESS, startSystem);
+    	schalter.addEventListener(ButtonEvent.RELEASE, endSystem);
     }
     
     function onPress(evt) {

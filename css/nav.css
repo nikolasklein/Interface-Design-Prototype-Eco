@@ -32,6 +32,22 @@
     position: relative;
 }
 
+.shadow{
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    z-index: 9999999;
+    top: 76px;
+    pointer-events: none;
+    background-image: url(../shadow.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    opacity: 0.25;
+    margin: auto;
+    
+}
+
 #navigation ul{
 	padding:0;
 	margin:0;
@@ -67,7 +83,7 @@
 	top:-75px;	
 	-webkit-transition: top 600ms cubic-bezier(0.23, 1, 0.32, 1);
   	transition:         top 600ms cubic-bezier(0.23, 1, 0.32, 1);
-	background-color:#14161a;
+	background-color: #1C1D21;
 }
 
 #navigation .container .active{
@@ -193,5 +209,5 @@
 
 /*GREEN LEAF*/
 .greenLeafButton .active{
-	background-color:#52db78!important;	
+	background-color:#51dc78!important;	
 }

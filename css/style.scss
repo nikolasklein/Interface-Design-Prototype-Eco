@@ -24,6 +24,12 @@ html, body, div, a, span{
 }
 
 $black: #14161a;
+$green: #51dc78;
+$red: #fd6055;
+$blue: #4ab9ec;
+$purple: #c07bf5;
+$yellow: #e6db41;
+$grey: #1c1d21;
 
 .clear::after{clear:both;}
 
@@ -35,12 +41,12 @@ body {
 	background-repeat:no-repeat;
 	background-size:1104px 621px;	
 
-	background-color:#14161a;
+	background-color: $black;
 	text-align: center;
 	margin: 0px;
-	font-weight: 100;
+	font-weight: 300;
 	color: #7e7e7e;
-	font-family: "Open Sans", "Source Sans", "Helvetica Neue", Helvetica, Arial;
+	font-family: "sfns", "Open Sans", "Source Sans", "Helvetica Neue", Helvetica, Arial;
     display:table-cell;
     vertical-align:top;	
     text-align: left;
@@ -61,19 +67,27 @@ body {
 
 
 .mainwrapper{
-    width: 33%;
+    width: 368px;
     height: 545px;
     display: block;
     position: relative;
     background-color: $black;
     float: left;
     transition: width 0.15s;
+    border-right: 1px solid black;
+}
+
+#mainTemp{
+    border-right: none;
 }
 
 .element{
     display: inline-block;
     box-sizing: border-box;
     float: left;
+    letter-spacing: 0.1em;
+    font-weight: 400;
+    color: #9B9C9D;
 }
 
 .top, .bottom{
@@ -81,19 +95,19 @@ body {
     height: 75px;
     z-index: 3;
     cursor: pointer;
-    background-color: #1c1c1c;
     line-height: 75px;
+    font-size: 21px;
     text-align: center;
     transition: border 0.15s, color 0.15s, background-color 0.15s;
 }
 
 .top{
     border-top: none !important;
-    border-bottom: 1px solid #1c1c1c;
+    border-bottom: 1px solid black;
 }
 
 .bottom{
-    border-top: 1px solid #1c1c1c;
+    border-top: 1px solid black;
     border-bottom: none !important;    
 }
 
@@ -102,20 +116,20 @@ body {
 }
 
 .top.onlyBorder{
-    border-bottom: 1px dashed #9a9797;
+    border-bottom: 1px solid $black;
     color: transparent !important;
 }
 .top.onlyBorderButText{
-    border-bottom: 1px dashed #9a9797;
+    border-bottom: 1px solid $black;
 }
 
 .bottom.onlyBorder{
-    border-top: 1px dashed #9a9797;
+    border-top: 1px solid $black;
     color: transparent !important;
 }
 
 .bottom.onlyBorderButText{
-    border-top: 1px dashed #9a9797;
+    border-top: 1px solid $black;
 }
 
 .top.selected, .bottom.selected{
@@ -123,6 +137,7 @@ body {
     color: $black;
     border-style: solid;
     border-color: white;
+    font-weight: 400;
 }
 
 
@@ -139,10 +154,13 @@ body {
     left: 119.5px;
     width: 125px;
     height: 200px;
-    background-color: white;
+    background-color: $black;
     transition: background .15s;
     overflow: visible;
-    
+    box-sizing: border-box;
+    background-image: url(../icon-bg.png);
+    background-position: center bottom;
+    background-size: 100% 100%;
     transition: opacity 0.15s, left 0.15s, transform 0.15s;
 }
 
@@ -198,27 +216,44 @@ body {
 
 .handleCircle{
     display: block;
-    width: 37.5px;
-    height: 37.5px;
+    width: 40px;
+    height: 40px;
     position: absolute;
     top: 18.75px;
-    right: 12px;
+    right: 11px;
     border-radius: 999em;
-    background-color: rgba(190, 190, 190, 0.77);
+    background-color: white;
+    border: 4px solid rgba(76, 76, 76, 1);
     box-sizing: border-box;
     transition: background-color 0.15s, opacity 0.15s, transform 0.15s;
 }
 
 .handleCircleSmall{
     transform: scale(0.75);
+    background-color: white;
+    border-color: white;
+    opacity: 0.75;
 }
 
 .ui-draggable-dragging .handle .handleCircle{
+    transform: scale(0.75);
     background-color: white;
+    border-color: white;
+    opacity: 0.9;
 }
 
 .ui-draggable-dragging .handle .handleCircle.greenCircle, .greenCircle{
-    background-color: green;
+    background-image: url(../greenleafwhite.png);
+    background-position: center center;
+    background-size: 50% auto;
+    background-repeat: no-repeat;
+    background-color: $green;
+    border: none;
+}
+
+.textOverlay.selected .handleCircle{
+    border-color: #afafaf;
+    border-width: 4px;
 }
 
 
@@ -234,17 +269,44 @@ body {
     pointer-events: none;
     position: absolute;
     height: 75px;
-    line-height: 75px;
+    line-height: 72px;
     color: white;
+    padding-top: 2px;
     font-weight: bold;
     top: 100px;
     left: 0px;
     transition: color 0.15s, background-color 0.15s;
 }
 
+.textOverlay.selected{
+    background-color: transparent;
+    color: $black;
+    font-weight: 400;
+}
+
+.overlayValue{
+    display: inline-block;
+    width: 1.1em;
+    text-align: left;
+    font-size: 2.6em;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+}
+
+.textOverlayText .overlaySmall{
+    font-size: 21px;
+    display: inline-block;
+    padding-left: 0.4em;
+    font-weight: 400;
+}
+
+#mainTemp .textOverlayText{
+    letter-spacing: 0.15em;
+}
+
 .textTransparent{
-    color: rgba(255, 255, 255, 0);
-    background-color: rgba(255, 255, 255, 0);
+    color: rgba(255, 255, 255, 0) !important;
+    background-color: rgba(255, 255, 255, 0) !important;
 }
 
 
@@ -281,6 +343,7 @@ body {
     position: absolute;
     text-align: center;
     top: 200px;
+    z-index: 10;
 }
 
 .greenleaf.hidden{
@@ -302,12 +365,17 @@ body {
 .greenleafIcon{
     display: inline-block;
     box-sizing: border-box;
-    width: 30px;
-    height: 30px;
-    margin-left: 1px;
-    margin-top: 20px;
-    border: 1px solid green;
+    width: 38px;
+    height: 38px;
+    margin-left: 0.5px;
+    margin-top: 19.5px;
+    border: 2px solid $green;
     border-radius: 9999em;
+    background-color: $black;
+    background-image: url(../greenleaf.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
 }
 
 .skalaLi{
@@ -353,6 +421,7 @@ body {
     width: 100%;
     height: 75px;
     display: block;
+    font-size: 21px;
     position: absolute;
     top: 250px;
     z-index: 10;
@@ -367,12 +436,32 @@ body {
 .ghostIcon{
     display: inline-block;
     box-sizing: border-box;
-    width: 30px;
-    height: 30px;
+    width: 43px;
+    height: 43px;
     margin-left: 1px;
-    margin-top: 20px;
+    margin-top: 18.5px;
     border: 2px solid white;
     border-radius: 9999em;
+    line-height: 43px;
+    color: white;
+    font-weight: 400;
+    background-color: $black;
+    text-align: center;
+}
+
+.ghostIcon.heating{
+    border-color: $red;
+    color: $red;
+}
+
+.ghostIcon.cooling{
+    border-color: $blue;
+    color: $blue;
+}
+
+#mainJal .ghostIcon{
+    border-color: $purple;
+    color: $purple;
 }
 
 .detailOverlay{
@@ -407,4 +496,41 @@ body {
 
 .detailSettings.shown{
     transform: translate(0);
+}
+
+.greentitle{
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    height: 76px;
+    text-align: center;
+    color: white;
+    width: 100%;
+    line-height: 76px;
+    z-index: 10000000;
+    font-size: 21px;
+    letter-spacing: 0.1em;
+    font-weight: 400;
+    color: #9B9C9D;
+}
+
+.greenleafNavigation {
+    display: inline-block;
+    width: 19px;
+    height: 17px;
+    background-image: url(../greenleafwhite.png);
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center center;
+    opacity: 0.7;
+    margin-right: 10.5px;
+}
+
+.greentitle.active .greenleafNavigation{
+    background-image: url(../greenleafactivewhite.png);
+    opacity: 1;
+}
+.greentitle.active{
+    background-color: $green;
+    color: white;
 }

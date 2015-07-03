@@ -14,7 +14,9 @@ var settingGreenLeaf = false;
 
 var detailLightSet = false;
 var settingsSet = false;
-
+var detailDragging = false;
+        
+        
 $(window).keydown(function(e){
     var code = e.keyCode || e.which;
     if(code == 91 || code == 93) {
@@ -39,7 +41,7 @@ function toggleDetailLight(){
         $(".detailLight").css({"opacity" : 0});
         $(".detailLight").removeClass("shown");
         detailLightSet = false;
-        $(".mainwrapper").css({"width" : "33%"});
+        $(".mainwrapper").css({"width" : "368px"});
         $("#mainLight .iconLayer").css({"left" : "119.5px", "transform" : "scale(1)"});
     }else{
         $(".detailLight").css({"opacity" : 1});
@@ -136,6 +138,14 @@ function setScaleOpacity(border, parentId){
     
     var targetParentId = getParentId(parentId);
     
+    var topNumber = 85;
+    var bottomNumber = 16;
+    
+    if(detailDragging){
+        topNumber = 95;
+        bottomNumber = 5;
+    }
+    
     $("#" + targetParentId + " .skalaLi").each(function(index){
 
         var id = $(this).attr("id").substring(2);
@@ -143,20 +153,20 @@ function setScaleOpacity(border, parentId){
         var newOpacity = 0;
         
 
-        if (border > 85) {
-            border = 85
+        if (border > topNumber) {
+            border = topNumber
         }
         
-        if (border < 16) {
-            border = 16
+        if (border < bottomNumber) {
+            border = bottomNumber
         }
 
         var borderHigh = border + 1;
         
         if ( id <= border){
-            newOpacity = map(id, 15, border, 0, 1)
+            newOpacity = map(id, bottomNumber-1, border, 0, 1)
         }else{
-            newOpacity = map(id, borderHigh, 87, 1, 0)
+            newOpacity = map(id, borderHigh, topNumber+1, 1, 0)
         }
         
         $(this).css({"opacity":newOpacity})
@@ -278,6 +288,14 @@ function updateScale(mouseY, parentId, savePrevPosition, updateGhost){
             if(moveToGhost || settingGreenLeaf){
                 heating = false;
             }
+        }
+        
+        if(heating){
+            $("#" + targetParentId + " .ghostIcon").addClass("heating");
+            $("#" + targetParentId + " .ghostIcon").removeClass("cooling");
+        }else{
+            $("#" + targetParentId + " .ghostIcon").addClass("cooling");
+            $("#" + targetParentId + " .ghostIcon").removeClass("heating");
         }
         
 
@@ -459,13 +477,13 @@ function savePosition(newPosition, parentId, oldPosition){
     
     if(parentId == 2){
         var newDegree = parseInt(map(newPosition, 100, 0, 18, 24));
-        $("#" + targetParentId + " .ghostIcon").html(newDegree + "°C");
+        $("#" + targetParentId + " .ghostIcon").html(newDegree);
         animationDuration = 5000;
     }
 
     if(parentId == 0){
         var mappedPosition = 100-currentVal[0]
-        $("#" + targetParentId + " .ghostIcon").html(mappedPosition + "%");
+        $("#" + targetParentId + " .ghostIcon").html(mappedPosition);
         animationDuration = 3000;
     }
     

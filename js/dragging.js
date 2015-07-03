@@ -150,7 +150,7 @@
 
                 setSnapElements(dragParentId);
 
-                
+                detailDragging = true;
                 dragSnapped = false;
 	        },	    	
 	        drag: function(event, ui) {
@@ -166,30 +166,36 @@
                     case 1:
                         $("#" + dragParentId + " .bottom").removeClass("selected")
                         $("#" + dragParentId + " .top").addClass("selected")
+                        $("#" + dragParentId + " .textOverlay").addClass("selected");
+                        detailDragging = false;
                         if(!dragSnapped){$("#" + dragParentId + " .textOverlayText").html($("#" + dragParentId + " .top .content").attr("id"));}
                         break;
                     case -1:
                         $("#" + dragParentId + " .bottom").addClass("selected")
                         $("#" + dragParentId + " .top").removeClass("selected")
+                        $("#" + dragParentId + " .textOverlay").addClass("selected");
+                        detailDragging = false;
                             if(!dragSnapped){$("#" + dragParentId + " .textOverlayText").html($("#" + dragParentId + " .bottom .content").attr("id"));}
                         break;
                     case 0:
                         $("#" + dragParentId + " .top").removeClass("selected")
                         $("#" + dragParentId + " .bottom").removeClass("selected")
+                        $("#" + dragParentId + " .textOverlay").removeClass("selected");
+                        detailDragging = true;
                         if(dragParentNumber != 2){
                             if(!dragSnapped){
-                                $("#" + dragParentId + " .textOverlayText").html(newPercentage + "%");
+                                $("#" + dragParentId + " .textOverlayText").html("<span class='overlayValue'>" + newPercentage + "</span><span class='overlaySmall'>%</span>");
                             }else{
-                                $("#" + dragParentId + " .textOverlayText").html(greenLeafPercentage + "%");
+                                $("#" + dragParentId + " .textOverlayText").html("<span class='overlayValue'>" + greenLeafPercentage + "</span><span class='overlaySmall'>%</span>");
                             }
                         }else{
                             
                             if(!dragSnapped){
                                 var newDegree = parseInt(map(newPercentage, 0, 100, 18, 24));
-                                $("#" + dragParentId + " .textOverlayText").html(newDegree + "°C");
+                                $("#" + dragParentId + " .textOverlayText").html("<span class='overlayValue'>" + newDegree + "</span><span class='overlaySmall'>°C</span>");
                             }else{
                                 var newDegree = parseInt(map(greenLeafPercentage, 0, 100, 18, 24));
-                                $("#" + dragParentId + " .textOverlayText").html(newDegree + "°C");
+                                $("#" + dragParentId + " .textOverlayText").html("<span class='overlayValue'>" + newDegree + "</span><span class='overlaySmall'>°C</span>");
                             }
                         }
                         break;
@@ -240,7 +246,6 @@
                         dragSnapped = true;
                     }
                 }
-
 	        },
 	        stop: function(event, ui){
                 $("#" + dragParentId + " .skala").addClass("hidden");
@@ -248,6 +253,7 @@
                 $("#" + dragParentId + " .top, " + "#" + dragParentId + " .bottom").removeClass("onlyBorder");
                 $("#" + dragParentId + " .iconLayer").removeClass("hideBg");
                 
+                detailDragging = false;
                 
                 if(dragParentNumber != 1){
                     savePosition(currentVal[dragParentNumber], dragParentNumber, savePrevPosition);
@@ -333,18 +339,21 @@
                         $("#" + dragParentId + " .top").addClass("selected")
 
                         $("#" + dragParentId + " .textOverlay").css({"top" : 0 + "px"})
+                        $("#" + dragParentId + " .textOverlay").addClass("selected");
                         break;
                     case -1:
                         $("#" + dragParentId + " .bottom").addClass("selected")
                         $("#" + dragParentId + " .top").removeClass("selected")
 
                         $("#" + dragParentId + " .textOverlay").css({"top" : checkBorderBottom-75 + "px"})
+                        $("#" + dragParentId + " .textOverlay").addClass("selected");
                         break;
                     case 0:
                         $("#" + dragParentId + " .bottom").removeClass("selected")
                         $("#" + dragParentId + " .top").removeClass("selected")
 
                         $("#" + dragParentId + " .textOverlay").css({"top" : mousePosition-75-($(".textOverlay").height()/2) + "px"})
+                        $("#" + dragParentId + " .textOverlay").removeClass("selected");
 
                         break;
                 }
