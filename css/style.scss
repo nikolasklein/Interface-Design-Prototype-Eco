@@ -498,6 +498,10 @@ body {
     transform: translate(0);
 }
 
+.detailLight.shown{
+    pointer-events: all;
+}
+
 .greentitle{
     position: absolute;
     left: 0px;
@@ -526,11 +530,17 @@ body {
     margin-right: 10.5px;
 }
 
-.greentitle.active .greenleafNavigation{
+
+.greenLeafButton.visible .greenleafNavigation{
     background-image: url(../greenleafactivewhite.png);
     opacity: 1;
 }
-.greentitle.active{
-    background-color: $green;
+.greenLeafButton.visible .greentitle{
     color: white;
+}
+
+
+.saveable.savedButton{
+    color: $black;
+    background-color: white;
 }

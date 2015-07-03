@@ -23,15 +23,11 @@ $(window).keydown(function(e){
         cmdPressed = true;
     }
     
-    if (code == 32){
-        setToGreenLeaf();
-    }
-    
     if (code == 83) {
-        toggleSettings();
+
     }
     if (code == 68) {
-        toggleDetailLight();
+
     }
     
 })
@@ -111,6 +107,17 @@ $( document ).ready(function() {
 	
 	        setPosition(setPositionOn, 100, true);
 		}
+		if($(this).hasClass("saveable")){
+    		$(this).addClass("savedButton");
+		}
+    })
+    
+    $("#mainLight .iconOverlay").click(function(){
+        toggleDetailLight();
+    })
+
+    $(".detailLight").click(function(){
+        toggleDetailLight();
     })
 
 });
@@ -269,8 +276,6 @@ function updateScale(mouseY, parentId, savePrevPosition, updateGhost){
         if(settingGreenLeaf){
         //    savePrevPosition = greenLeafVal[parentId];
         }
-        
-        console.log(percentage + " // " + savePrevPosition);
         
         if (percentage > savePrevPosition) {
             topScaleBorder = percentage;
@@ -456,6 +461,8 @@ function resetSnapMode(snappedToId, targetParentId){
             break;
         case "allGreen":
             $(".handleCircle").removeClass("greenCircle");
+            $("#3").removeClass("visible");
+            menuReset();
             break;
     }
     
@@ -548,6 +555,23 @@ function setToGreenLeaf(){
     }, 5000)
 }
 
+var buttonsSetToSave = false;
 
+function setButtonsToSave(hiding){
+    if (!hiding) {
+        $(".bottom .content").html("SPEICHERN");
+        $(".bottom").addClass("saveable");
+        buttonsSetToSave = true;
+        
+    }else{
+        $(".bottom .content").each(function(){
+            var newID = $(this).attr("id");
+            $(this).html(newID);
+        })
+        $(".bottom").removeClass("saveable");
+        $(".savedButton").removeClass("savedButton");
+        buttonsSetToSave = false;
+    }
+}
 
 

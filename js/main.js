@@ -78,6 +78,8 @@ $(document).ready(function() {
     	var btn = evt.target;
     	var btnNumber=btn._pin.number-1;
     		console.log(btnNumber);
+        
+        setButtonsToSave(true);
     
     	// display the state on the page
     	menuReset();
@@ -86,12 +88,16 @@ $(document).ready(function() {
     			$("#"+(btnNumber)).addClass("visible"); //NUR ACTIVE WENN STATUS EIGNESPEICHERT
     		}
     		startCounter(btnNumber);
-    	}
-    	else{
+    	}else{
     		if(!greenLeaf){
     		 	$("#"+(btnNumber)).addClass("visible"); //NUR ACTIVE WENN STATUS EIGNESPEICHERT
     			greenLeaf=true;
+                setToGreenLeaf();
     		}
+    	}
+    	
+    	if(btnNumber == 6){
+            toggleSettings();
     	}
     }
     
@@ -105,6 +111,7 @@ $(document).ready(function() {
     		$("#"+(btnNumber)).addClass("visible");
     		$("#"+(btnNumber)).addClass("saved");
     	}
+    	setButtonsToSave(false);
     }
     
     function startCounter(btnNumber){
@@ -129,12 +136,16 @@ $(document).ready(function() {
     	var btnNumber=btn._pin.number-1;
     	if(btnNumber!=3){
     		console.log("RELEASE");
-    		if(!longPressed&&slots[btnNumber-1]){ //Wenn nicht in speichermodus, dann werte setzen
-    			console.log("CHECK"+btnNumber);
-    			
+            setButtonsToSave(true);
+
     			console.log(jalVal)
     			console.log(lightVal)
     			console.log(tempVal)
+
+    		if(!longPressed&&slots[btnNumber-1]){ //Wenn nicht in speichermodus, dann werte setzen
+    			console.log("CHECK"+btnNumber);
+    			
+
     			
     			if($("#j"+ btnNumber).hasClass("active")) {
 					var setToJalValue = jalVal[btnNumber-1];
@@ -157,6 +168,7 @@ $(document).ready(function() {
     		longPressed=false;
     		var isSaved=checkSaved(btnNumber);
     		if(!isSaved){
+    	        resetSnapMode("allGreen", 0);
     			$("#"+(btnNumber)).removeClass("visible");
     			$("#"+(btnNumber)).removeClass("saved");
     			slots[btnNumber-1]=false;
@@ -308,19 +320,6 @@ $(document).ready(function() {
     	saveTemp(activeButton);
     });
     
-    //RESET
-    //TOGGLE ACTIVE STATUS
-    function menuReset(btnNumber){
-    	$("#navigation ul li").each(function(){
-    			if($(this).hasClass("visible")) {
-    				$(this).removeClass("visible");
-    			}
-    			if(btnNumber!=3){
-    				greenLeaf=false;	
-    			}
-    	});
-    }
-    
     //OVERWRIDE STATUS
     function statusReset(btnNumber){
     	$("#t"+ btnNumber +" li").each(function(){
@@ -428,3 +427,16 @@ $(document).ready(function() {
 
 });
 
+    
+    //RESET
+    //TOGGLE ACTIVE STATUS
+    function menuReset(btnNumber){
+    	$("#navigation ul li").each(function(){
+    			if($(this).hasClass("visible")) {
+    				$(this).removeClass("visible");
+    			}
+    			if(btnNumber!=3){
+    				greenLeaf=false;	
+    			}
+    	});
+    }
