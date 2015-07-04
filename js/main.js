@@ -7,8 +7,12 @@ var greenLeaf=false;
 //SYSTEM
 var systemActive=false;
 var systemButton=false;
+var reConnected=true;
+var interval;
+var intervalSet=false;
 
-//VARIABLES SLOTS
+
+//VARIABLES SLOTS 
 var slots=[false,false,false,false ];
 
 //ARRAYS
@@ -17,10 +21,13 @@ var lightVal=[0,0,0,0];
 var tempVal=[0,0,0,0];
 
 var currentVal=[0,0,0];
+var arduino;
 
 
 $(document).ready(function() {
-    
+startArduino();
+
+function startArduino(){
     var IOBoard = BO.IOBoard;
     var IOBoardEvent = BO.IOBoardEvent;
     var Button = BO.io.Button;
@@ -33,7 +40,7 @@ $(document).ready(function() {
     // that the Arduino board is connected to, replace
     // window.location.hostname with the IP address or hostname
     // of the computer that the Arduino board is connected to.
-    var host = "172.17.19.243";
+    var host = "172.17.11.198";
     
     
     arduino = new IOBoard(host, 8887);
@@ -41,6 +48,8 @@ $(document).ready(function() {
     // Listen for the IOBoard READY event which indicates the IOBoard
     // is ready to send and receive data
     arduino.addEventListener(IOBoardEvent.READY, onReady);
+    arduino.addEventListener(IOBoardEvent.DISCONNECTED,setConnect);
+
     
     function onReady(event) {
         // Remove the event listener because it is no longer needed
@@ -71,6 +80,7 @@ $(document).ready(function() {
         schalter.addEventListener(ButtonEvent.PRESS, startSystem);
     	schalter.addEventListener(ButtonEvent.RELEASE, endSystem);
     }
+}
     
     function onPress(evt) {
     	// get a reference to the target which is the button that 
@@ -135,6 +145,7 @@ $(document).ready(function() {
     	var btn=evt.target;
     	var btnNumber=btn._pin.number-1;
     	if(btnNumber!=3){
+			resetSnapMode("allGreen", 0);
     		console.log("RELEASE");
             setButtonsToSave(true);
 
@@ -433,6 +444,7 @@ $(document).ready(function() {
     	if(!systemButton){
     		if(!systemActive){
     			$(".overlay").addClass("inactive");
+    			startInterval();
     			systemActive=true;
     		}
     		else{
@@ -445,6 +457,23 @@ $(document).ready(function() {
     
     function endSystem(){
     		systemButton=false;
+    }
+    
+    function setConnect(){
+    	console.log("ABBRUCH");
+	 	if(reConnected){
+		 	reConnected=false;
+	 	}
+    }
+    
+    function startInterval(){
+	    interval=setInterval(function(){
+			if(systemActive&&!reConnected){
+		    startArduino();
+		    			reConnected=true;
+		    console.log("NEU");
+	    }
+		},4000);
     }
 
 });
@@ -462,3 +491,5 @@ $(document).ready(function() {
     			}
     	});
     }
+    
+   
