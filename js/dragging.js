@@ -133,7 +133,7 @@
             snap: ".top, .bottom",
             snapMode: "inner",
 	        start: function(event, ui){
-    	        resetSnapMode("allGreen", 0);
+    	        resetSnapMode("allGreenAndMenu", 0);
     	        //hier ein getdragParentId()
     	        //diese ID dann vor alle Elemente setzen, dann läuft das automatisch ab
                 dragParentId = $(this).parent().attr("id");
@@ -290,7 +290,7 @@
                 $("#" + dragParentId + " .greenleaf").addClass("hidden");
                 $("#" + dragParentId + " .ghost").addClass("hidden");
                 
-    	        resetSnapMode("allGreen", 0);
+    	        resetSnapMode("allGreenAndMenu", 0);
                 
                 starttime = new Date();
                 timeArray = [];

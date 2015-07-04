@@ -462,6 +462,10 @@ function resetSnapMode(snappedToId, targetParentId){
         case "allGreen":
             $(".handleCircle").removeClass("greenCircle");
             $("#3").removeClass("visible");
+            break;
+        case "allGreenAndMenu":
+            $(".handleCircle").removeClass("greenCircle");
+            $("#3").removeClass("visible");
             menuReset();
             break;
     }

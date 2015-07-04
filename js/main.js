@@ -97,6 +97,7 @@ function startArduino(){
     		if(slots[btnNumber-1]){
     			$("#"+(btnNumber)).addClass("visible"); //NUR ACTIVE WENN STATUS EIGNESPEICHERT
     		}
+    		console.log(slots[btnNumber-1]);
     		startCounter(btnNumber);
     	}else{
     		if(!greenLeaf){
@@ -112,6 +113,7 @@ function startArduino(){
     }
     
     function longPress(btnNumber){
+    	console.log("LONG");
     	longPressed=true;
     	activeButton=btnNumber;
     	statusReset(btnNumber);
@@ -144,6 +146,7 @@ function startArduino(){
     function onRelease(evt){
     	var btn=evt.target;
     	var btnNumber=btn._pin.number-1;
+    	console.log(btnNumber);
     	if(btnNumber!=3){
 			resetSnapMode("allGreen", 0);
     		console.log("RELEASE");
