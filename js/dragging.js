@@ -166,6 +166,7 @@
                     case 1:
                         $("#" + dragParentId + " .bottom").removeClass("selected")
                         $("#" + dragParentId + " .top").addClass("selected")
+                        $("#jalHandle").addClass("hiddenjalHandle");
                         $("#" + dragParentId + " .textOverlay").addClass("selected");
                         detailDragging = false;
                         if(!dragSnapped){$("#" + dragParentId + " .textOverlayText").html($("#" + dragParentId + " .top .content").attr("id"));}
@@ -173,6 +174,7 @@
                     case -1:
                         $("#" + dragParentId + " .bottom").addClass("selected")
                         $("#" + dragParentId + " .top").removeClass("selected")
+                        $("#jalHandle").addClass("hiddenjalHandle");
                         $("#" + dragParentId + " .textOverlay").addClass("selected");
                         detailDragging = false;
                             if(!dragSnapped){$("#" + dragParentId + " .textOverlayText").html($("#" + dragParentId + " .bottom .content").attr("id"));}
@@ -180,6 +182,7 @@
                     case 0:
                         $("#" + dragParentId + " .top").removeClass("selected")
                         $("#" + dragParentId + " .bottom").removeClass("selected")
+                        $("#jalHandle").removeClass("hiddenjalHandle");
                         $("#" + dragParentId + " .textOverlay").removeClass("selected");
                         detailDragging = true;
                         if(dragParentNumber != 2){
@@ -337,21 +340,21 @@
                     case 1:
                         $("#" + dragParentId + " .bottom").removeClass("selected")
                         $("#" + dragParentId + " .top").addClass("selected")
-
+                        $("#jalHandle").addClass("hiddenjalHandle");
                         $("#" + dragParentId + " .textOverlay").css({"top" : 0 + "px"})
                         $("#" + dragParentId + " .textOverlay").addClass("selected");
                         break;
                     case -1:
                         $("#" + dragParentId + " .bottom").addClass("selected")
                         $("#" + dragParentId + " .top").removeClass("selected")
-
+                        $("#jalHandle").addClass("hiddenjalHandle");
                         $("#" + dragParentId + " .textOverlay").css({"top" : checkBorderBottom-75 + "px"})
                         $("#" + dragParentId + " .textOverlay").addClass("selected");
                         break;
                     case 0:
                         $("#" + dragParentId + " .bottom").removeClass("selected")
                         $("#" + dragParentId + " .top").removeClass("selected")
-
+                        $("#jalHandle").removeClass("hiddenjalHandle");
                         $("#" + dragParentId + " .textOverlay").css({"top" : mousePosition-75-($(".textOverlay").height()/2) + "px"})
                         $("#" + dragParentId + " .textOverlay").removeClass("selected");
 

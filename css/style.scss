@@ -81,6 +81,20 @@ body {
     border-right: none;
 }
 
+#jalHandle{
+    width: 30px;
+    height: auto;
+    position: absolute;
+    left: 49px;
+    top: -3px;
+    transition: opacity 0.15s;
+}
+
+#jalHandle.hiddenjalHandle{
+    opacity: 0;
+}
+
+
 .element{
     display: inline-block;
     box-sizing: border-box;

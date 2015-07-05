@@ -404,6 +404,7 @@ function setPosition(parentId, percentagePosition, setTextOverlay, longDuration,
         case 1:
             $("#" + targetParentId + " .bottom").removeClass("selected")
             $("#" + targetParentId + " .top").addClass("selected")
+            $("#jalHandle").addClass("hiddenjalHandle");
             if(!setTextOverlay){
                 $("#" + targetParentId + " .textOverlay").animate({top:0}, {duration: longDuration});
             }else{
@@ -413,6 +414,7 @@ function setPosition(parentId, percentagePosition, setTextOverlay, longDuration,
         case -1:
             $("#" + targetParentId + " .bottom").addClass("selected")
             $("#" + targetParentId + " .top").removeClass("selected")
+            $("#jalHandle").addClass("hiddenjalHandle");
             if(!setTextOverlay){
                 $("#" + targetParentId + " .textOverlay").animate({top:bottomBorder - $(".bottom").outerHeight() - topBorder}, {duration: longDuration});
             }else{
@@ -422,6 +424,7 @@ function setPosition(parentId, percentagePosition, setTextOverlay, longDuration,
         case 0:
             $("#" + targetParentId + " .bottom").removeClass("selected")
             $("#" + targetParentId + " .top").removeClass("selected")
+            $("#jalHandle").removeClass("hiddenjalHandle");
             if(!setTextOverlay){
                 $("#" + targetParentId + " .textOverlay").animate({top:pixelPosition-76-37.5}, {duration: longDuration});
             }else{
