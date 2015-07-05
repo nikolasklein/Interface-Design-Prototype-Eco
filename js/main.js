@@ -40,7 +40,7 @@ function startArduino(){
     // that the Arduino board is connected to, replace
     // window.location.hostname with the IP address or hostname
     // of the computer that the Arduino board is connected to.
-    var host = "172.17.11.198";
+    var host = "172.17.16.74";
     
     
     arduino = new IOBoard(host, 8887);
