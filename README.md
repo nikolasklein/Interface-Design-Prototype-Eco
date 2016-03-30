@@ -1,4 +1,4 @@
-# Interface-Design-Prototype-Eco
+# Eco - an intelligent room control system
 Prototype for a 4th semester project in interface design
 
 Read more: [Eco - ein intelligentes raumsteuerungssystem](http://ig.hfg-gmuend.de/Members/nikolas_klein/meine-projekte/eco-ein-intelligentes-raumsteuerungssystem)
